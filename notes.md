@@ -12,27 +12,20 @@
 
 * Create a btn to save the template. This functionalities:
  - At the first, save templates data through Local Storage
- - Create a Template Card Above (same page)
+ - 
+Create a Template Card Above (same page)
 
 
 * Input template name as start creating new template
 
 
-
- Lembrar: 
-
- Criar regex @{a-z}
-
- pattern.match()
-
- match() returns an array with the matches [nomeCompleto, ...]
-
-
-Exemple:
-
-let text = "Visit W3Schools";
-let pattern = /w3schools/i; (IMPORTANT: change the modifier " i " to " g " to find all matches rather than stopping after first match
-let result = text.match(pattern);
+### Save function:
+- Save template LocalStorage;
+- create inputs form from merge fields
+- create a new template card with name and last update;
+- clean template
+- clean name template input
+- close modal;
 
 
-test()
+

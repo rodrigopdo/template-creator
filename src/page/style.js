@@ -38,8 +38,9 @@ export const InputTemplateName = styled.div`
     font-weight: 600;
     &::placeholder {
       color: ${colors.gray4};
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
   }
 `;
+
 

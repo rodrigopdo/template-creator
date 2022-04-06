@@ -23,63 +23,76 @@ import {
 const CKTextBox = () => {
   
   const [template, setTemplate] = useState('Digite aqui..');
- 
   const [disabled, setDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [modal, setModal] = useState(false);
-  const [statusCards, setStatusCards] = useState([])
+  const [statusCards, setStatusCards] = useState([]);
+  const [templateName, setTemplateName] = useState('');
+  const [saveTemplate, setSaveTemplate] = useState();
 
+  useEffect(() => {
+      
+    setStatusCards([
+      {
+        "count": "Contrato de Cessão",
+        "title": "Ultima atualização: 13/02/2022"
+      },
+      {
+        "count": "Contrato de Cessão com Sacado",
+        "title": "Ultima atualização: 13/02/2022"
+      },
+      {
+        "count": "Nota Promissória",
+        "title": "Ultima atualização: 14/02/2022"
+      },
+      {
+        "count": "Termo de Cessão",
+        "title": "Ultima atualização: 04/02/2022"
+      }
+    ]);
+  }, []);
+
+
+  const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
+  let mergeFieldsPattern = new RegExp(mergeFieldsRegex);
+  let mergeFieldsList = template.match(mergeFieldsPattern)
+  
+  
+  const onlyNamesList = mergeFieldsList ? mergeFieldsList.map(item => 
+  item
+    .replace('@', '')
+    .replace('{', '') 
+    .replace('}', '')
+  ) : null;
+
+  const upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
+  
+  console.log(mergeFieldsList);
+  console.log(onlyNamesList);
+  console.log(upperCaseList);
+  
+  const saveTemplateLocalStorage = (key, value) => {
+    localStorage.setItem(key, value);
+    setIsSubmitModalOpen(true);
+  }
+  
+  const removeTemplate = (key) => {
+    
+  }
+  
   const handleOpenSubmitModal = () => {
     setIsSubmitModalOpen(true);
     console.log('salvou');
   }
-
+  
   const handleCloseSubmitModal = () => {
     setIsSubmitModalOpen(false);
+    setTemplate('Digite aqui..');
+    setTemplateName('');
   }
-
-    const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
-    let mergeFieldsPattern = new RegExp(mergeFieldsRegex);
-    let mergeFieldsList = template.match(mergeFieldsPattern)
-    
-    console.log(mergeFieldsList);
-    
-    const onlyNamesList = mergeFieldsList ? mergeFieldsList.map(item => 
-      item
-        .replace('@', '')
-        .replace('{', '') 
-        .replace('}', '')
-      ) : null;
-    
-    console.log(onlyNamesList);
-    
-    const upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
-    
-    console.log(upperCaseList);
-
-    useEffect(() => {
-      
-      setStatusCards([
-        {
-          "count": "Contrato de Cessão",
-          "title": "Ultima atualização: 13/02/2022"
-        },
-        {
-          "count": "Nota Promissória",
-          "title": "Ultima atualização: 14/02/2022"
-        },
-        {
-          "count": "Termo de Cessão",
-          "title": "Ultima atualização: 04/02/2022"
-        }
-        
-      ]);
-         
-    }, []);
  
   return (
-
     <PageContainer>
      {statusCards.length > 0 ?
           <CardsWrapper
@@ -106,7 +119,13 @@ const CKTextBox = () => {
       <Title>Criar novo Template</Title>
 
       <InputTemplateName>
-        <input placeholder='Nome do template..'></input>
+        <input 
+          autoFocus
+          maxLength={40} 
+          placeholder='Nome do template..'
+          value={templateName}
+          onChange={(e) => setTemplateName(e.target.value)}
+        />
       </InputTemplateName> 
       
       <CKEditor id="ckeditor" 
@@ -142,18 +161,19 @@ const CKTextBox = () => {
             type="submit"
             hoverColor={colors.pureGreen}
             text="Salvar"
-            onClick={handleOpenSubmitModal}
+            onClick={() => saveTemplateLocalStorage(templateName, template)}
           />
         </div>
       </BtnContainer>
 
         <ModalSubmit 
-        isOpen={isSubmitModalOpen}
-        onRequestClose={handleCloseSubmitModal} 
-        sendFile={true} 
-        status={errorModal ? "Ops, erro ao tentar salvar o Template! Por gentileza, tente novamente!" : "Template salvo com sucesso!"} 
-        statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
-        confirmation={true} />
+          isOpen={isSubmitModalOpen}
+          onRequestClose={handleCloseSubmitModal} 
+          sendFile={true} 
+          status={errorModal ? "Ops, erro ao tentar salvar o Template! Por gentileza, tente novamente!" : `Template ${templateName} salvo com sucesso!`} 
+          statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
+          confirmation={true} 
+        />
 
     </PageContainer>
   ); 

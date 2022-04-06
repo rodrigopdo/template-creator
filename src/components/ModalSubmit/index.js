@@ -25,7 +25,8 @@ function ModalSubmit({
   resetPassword,
   confirmation,
   forgotPassword,
-  width
+  width,
+  onClickModal
 }) {
 
   const customStyles = {

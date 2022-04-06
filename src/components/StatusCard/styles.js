@@ -18,27 +18,30 @@ export const Card = styled.div `
   transition: color .5s ease 0s;
   margin: 10px 10px 30px 10px;
   border-right: 2px solid ${colors.cleanGreen2};
-
+  
   div:nth-child(1) {
- 
+    margin: 5px 0 20px auto;
+    text-align: end;
     h4 {
       position: absolute;
       top: 20px;
       right: 20px;
-      font-size: 1.2rem;
+      left: auto;
+      max-width: 80%;
+      font-size: 0.8rem;
       color: ${({ theme }) => theme.cardTitle};
       opacity: 0.8;
       @media(max-width: 870px) {
-        font-size: 1.05rem;
+        font-size: 0.7rem;
       }
     }
     h5 {
       position: absolute;
       max-width: 170px;
       text-align: end;
-      top: 55px;
+      top: 65px;
       right: 20px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 500;
       color: ${({ theme }) => theme.cardSubTitle};
     }
@@ -54,7 +57,7 @@ export const Card = styled.div `
       color: ${({ theme }) => theme.cardTitle};
       opacity: 0.8;
       @media(max-width: 870px) {
-        font-size: 1.05rem;
+        font-size: 0.rem;
       }
     }
     h5 {
@@ -68,12 +71,24 @@ export const Card = styled.div `
       color: ${({ theme }) => theme.cardSubTitle};
     }
   }
-  /* p {
+  p {
     position: absolute;
-    top: 95px;
+    top: 105px;
     right: 20px;
     font-size: 0.6rem;
     color:${({ theme }) => theme.cardLinkText};
-  } */
+  }
+
+  div:nth-child(3) {
+    position: absolute;
+      top: 110px;
+      right: 20px;
+    img {
+    height: 15px;
+    color: ${colors.alertRed};
+  }
+
+  }
+  
 `;
 
