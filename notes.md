@@ -15,6 +15,9 @@
  - Create a Template Card Above (same page)
 
 
+* Input template name as start creating new template
+
+
 
  Lembrar: 
 
@@ -30,3 +33,6 @@ Exemple:
 let text = "Visit W3Schools";
 let pattern = /w3schools/i; (IMPORTANT: change the modifier " i " to " g " to find all matches rather than stopping after first match
 let result = text.match(pattern);
+
+
+test()
