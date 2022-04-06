@@ -1,0 +1,20 @@
+[
+    {
+        "icon": "fas fa-exclamation-circle",
+        "iconColor": "#FF5967",
+        "content": "Existe 1 Contrato de Cessão pendente de assinatura.",
+        "data": "16:45"
+    },
+    {
+        "icon": "far fa-comment",
+        "iconColor": "#3DD969",
+        "content": "Maria da Silva Campos respondeu o seu comentário.",
+        "data": "Ontem"
+    },
+    {
+        "icon": "far fa-bell",
+        "iconColor": "#828282",
+        "content": "Há novas solicitações de envio de arquivos.",
+        "data": "10 de novembro"
+    }
+]

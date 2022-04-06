@@ -1,9 +1,9 @@
-import CKTextBox from './components/CKTextBox';
+import CKTextBox from './page';
 
 function App() {
   return (
     <div>
-        <CKTextBox />
+      <CKTextBox />
     </div>
   );
 }

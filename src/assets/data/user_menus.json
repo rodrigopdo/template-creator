@@ -1,0 +1,14 @@
+[
+  {
+    "icon": "fas fa-cog",
+    "iconColor": "#3DD969",
+    "content": "Minha Conta",
+    "path": "/configuration"
+  },
+  {
+    "icon": "fas fa-sign-out-alt",
+    "iconColor": "#3DD969",
+    "content": "Sair",
+    "path": "/login"
+  } 
+]

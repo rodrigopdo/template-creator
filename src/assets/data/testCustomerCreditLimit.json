@@ -1,0 +1,11 @@
+  {
+    "farmerId": "ir43234",
+    "cpf": 23404567809,
+    "name": "Frederico da Silva",
+    "maxInstallmentAmount": 2345,
+    "maxCreditAmount": 2345,
+    "maxNumberOfInstallments": 2345,
+    "status": "approved" 
+  }
+
+
