@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { TextBox } from './components/TextBox';
+import CKTextBox from './components/CKTextBox';
+import JoditDefault from './components/JoditDefault';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import { MergeFields } from './components/MergeFields';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <DndProvider backend={HTML5Backend}>
+        {/* <TextBox placeholder="placeholder"/> */}
+        {/* <MergeFields name="Nome Completo" /> */}
+        <CKTextBox />
+        {/* <JoditDefault /> */}
+      </DndProvider>
     </div>
+
   );
 }
 
