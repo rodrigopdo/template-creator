@@ -9,7 +9,6 @@ export const Card = styled.div `
   max-width: 380px;
   height: 150px;
   min-height: 130px;
-  /* max-height: 300px; */
   flex-direction: column;
   padding: 35px 25px;
   background-image:  ${({ theme }) => theme.cardBg};
@@ -20,7 +19,7 @@ export const Card = styled.div `
   border-right: 2px solid ${colors.cleanGreen2};
   cursor: pointer;
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     box-shadow: rgba(149, 157, 165, 0.05) 10px 8px 18px;
   }
   

@@ -19,6 +19,7 @@ import {
   CardsWrapper,
   InputTemplateName 
 } from './style';
+import ModalForm from '../components/ModalForm';
 
 const CKTextBox = () => {
   
@@ -26,7 +27,7 @@ const CKTextBox = () => {
   const [disabled, setDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [statusCards, setStatusCards] = useState([]);
   const [templateName, setTemplateName] = useState('');
   const [saveTemplate, setSaveTemplate] = useState({});
@@ -88,6 +89,11 @@ const CKTextBox = () => {
     setTemplateName('');
     window.location.reload()
   };
+
+  //TOGGLE FORM MODAL
+  const handleFormModal = (status) => {
+    setOpenModal(status);
+  }
  
   return (
     <PageContainer>
@@ -100,7 +106,7 @@ const CKTextBox = () => {
               templateList.map((item, index) => (
                 <Col key={index} width="25%">
                   <StatusCard 
-                    onclick={() => alert(`Abrir formulário para preencher o ${item}`)}
+                    onclick={() => handleFormModal(true)}
                     title={item}
                     update={`Modificado: ${currentDate}`}
                     // count2={item.count2}
@@ -112,7 +118,6 @@ const CKTextBox = () => {
           </CardsWrapper>
           : <></>
       }
-       
       <Title>Criar novo Template</Title>
 
       <InputTemplateName>
@@ -170,6 +175,11 @@ const CKTextBox = () => {
           status={errorModal ? "Ops, erro ao tentar salvar o Template! Por gentileza, tente novamente!" : `Template ${templateName} salvo com sucesso!`} 
           statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
           confirmation={true} 
+        />
+
+        <ModalForm 
+          isOpen={openModal}
+          onRequestClose={() => handleFormModal(false)} 
         />
 
     </PageContainer>
