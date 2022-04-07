@@ -5,7 +5,7 @@ import { Card } from './styles';
 
 const StatusCard = props => {
   return (
-    <Card>
+    <Card onClick={props.onclick}>
       <div>
         <h4>{props.count}</h4>
         <h5>{props.title}</h5>

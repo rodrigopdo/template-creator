@@ -13,10 +13,13 @@
 * Create a btn to save the template. This functionalities:
  - At the first, save templates data through Local Storage
  - 
-Create a Template Card Above (same page)
+* Create a Template Card Above (same page)
 
 
-* Input template name as start creating new template
+* Create feature to generate pdf from click on Template Card;
+
+
+* PDF lib
 
 
 ### Save function:

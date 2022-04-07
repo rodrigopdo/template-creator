@@ -29,92 +29,103 @@ const CKTextBox = () => {
   const [modal, setModal] = useState(false);
   const [statusCards, setStatusCards] = useState([]);
   const [templateName, setTemplateName] = useState('');
-  const [saveTemplate, setSaveTemplate] = useState();
+  const [saveTemplate, setSaveTemplate] = useState({});
+  const [storage, setStorage] = useState({});
+  const [templateList, setTemplateList] = useState({});
 
   useEffect(() => {
+
+    let arrayTemplateNameList = Object.keys(localStorage);
       
-    setStatusCards([
-      {
-        "count": "Contrato de Cessão",
-        "title": "Ultima atualização: 13/02/2022"
-      },
-      {
-        "count": "Contrato de Cessão com Sacado",
-        "title": "Ultima atualização: 13/02/2022"
-      },
-      {
-        "count": "Nota Promissória",
-        "title": "Ultima atualização: 14/02/2022"
-      },
-      {
-        "count": "Termo de Cessão",
-        "title": "Ultima atualização: 04/02/2022"
-      }
-    ]);
+    console.log(arrayTemplateNameList)
+  
+    setTemplateList(arrayTemplateNameList)
+
+    const items = { ...localStorage };
+    console.log(items)
+  
+    
+    // const arrayTemplatesList = [];
+    // newTemplate.arrayTemplateList = arrayTemplatesList;
+    // setStorage(items)
   }, []);
-
-
+  
+  // console.log(storage)
+  // console.log(templateList)
+  
+  
+  // TO MAKE THE MERGE FIELDS INPUTS
   const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
   let mergeFieldsPattern = new RegExp(mergeFieldsRegex);
   let mergeFieldsList = template.match(mergeFieldsPattern)
   
-  
-  const onlyNamesList = mergeFieldsList ? mergeFieldsList.map(item => 
-  item
+  let onlyNamesList = mergeFieldsList ? mergeFieldsList.map(item => 
+    item
     .replace('@', '')
     .replace('{', '') 
     .replace('}', '')
-  ) : null;
-
-  const upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
-  
+    ) : null;
+    
+    let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
+  let formatTemplateName =  upperCaseList ? upperCaseList.map(item => item.replace('_', ' ')) : null;
   console.log(mergeFieldsList);
   console.log(onlyNamesList);
   console.log(upperCaseList);
+  console.log(formatTemplateName);
+  
+  //CREATE AN ARRAY OF OBJECTS TO LOCALSTORAGE
+  
+  //REGISTER UPDATE
+  localStorage.setItem("currentDay", new Date().toLocaleDateString());
   
   const saveTemplateLocalStorage = (key, value) => {
+    let newTemplate = {name: templateName, editor: template};
+    setSaveTemplate(newTemplate)
     localStorage.setItem(key, value);
-    setIsSubmitModalOpen(true);
-  }
-  
-  const removeTemplate = (key) => {
     
+    setIsSubmitModalOpen(true);
   }
   
-  const handleOpenSubmitModal = () => {
-    setIsSubmitModalOpen(true);
-    console.log('salvou');
-  }
+  // const removeTemplate = (key) => {
+    
+    // }
+    
+    // const handleOpenSubmitModal = () => {
+      //   setIsSubmitModalOpen(true);
+      //   console.log('salvou');
+  // }
   
   const handleCloseSubmitModal = () => {
     setIsSubmitModalOpen(false);
     setTemplate('Digite aqui..');
     setTemplateName('');
+    window.location.reload()
   }
  
   return (
     <PageContainer>
-     {statusCards.length > 0 ?
+      {templateList.length > 0 ?
           <CardsWrapper
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="flex-start"
           >
             {
-              statusCards.map((item, index) => (
-                <Col width="25%">
-                  <StatusCard key={index}
-                    icon={item.icon}
-                    count={item.count}
-                    title={item.title}
-                    count2={item.count2}
-                    title2={item.title2}
+              templateList.map((item, index) => (
+                <Col key={index} width="25%">
+                  <StatusCard 
+                    onclick={() => alert(`Abrir formulário para preencher o ${item}`)}
+                    
+                    count={item}
+                    title="modificado: 13/12/2021"
+                    // count2={item.count2}
+                    // title2={item.title2}
                   />
                 </Col>
               ))
             }
           </CardsWrapper>
           : <></>
-        }
+      }
        
       <Title>Criar novo Template</Title>
 
@@ -159,9 +170,9 @@ const CKTextBox = () => {
         <div>
           <Button
             type="submit"
-            hoverColor={colors.pureGreen}
+            hoverColor={colors.darkGreen}
             text="Salvar"
-            onClick={() => saveTemplateLocalStorage(templateName, template)}
+            onClick={() => saveTemplateLocalStorage('savedTemplateList', JSON.stringify(template))}
           />
         </div>
       </BtnContainer>

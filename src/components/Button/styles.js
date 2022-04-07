@@ -4,10 +4,10 @@ import colors from '../../styles/colors';
 
 export const Btn = styled.button `
   width: ${(props) => props.width || '180px'};
-  background-color: ${props => props.bgColor || colors.cleanGreen2};
+  background-color: ${props => props.bgColor || colors.pureGreen};
   height: ${(props) => props.height || '40px'};
   border-radius: 50px;
-  border: ${(props) => props.border ? '2px solid' + colors.white : '1px solid' + colors.cleanGreen2};
+  border: ${(props) => props.border ? '2px solid' + colors.white : '1px solid' + colors.pureGreen};
   outline: none;
   color: ${(props) => props.color || colors.white};
   font-size: 0.8rem;

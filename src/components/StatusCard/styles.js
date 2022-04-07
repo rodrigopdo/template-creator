@@ -13,11 +13,16 @@ export const Card = styled.div `
   flex-direction: column;
   padding: 35px 25px;
   background-image:  ${({ theme }) => theme.cardBg};
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 14px;
   border-radius: 5px;
-  transition: color .5s ease 0s;
+  transition: color .9s ease 0s;
   margin: 10px 10px 30px 10px;
   border-right: 2px solid ${colors.cleanGreen2};
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(149, 157, 165, 0.05) 10px 8px 18px;
+  }
   
   div:nth-child(1) {
     margin: 5px 0 20px auto;
