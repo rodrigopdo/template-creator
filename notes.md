@@ -27,6 +27,13 @@
   - active the lib to generate pdf;
 
 
+  ### NEXTS COMMITS 
+
+  * Create the form modal and rules to render inputs mapping from the template names array.
+
+  *  
+
+
 
 
 
