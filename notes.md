@@ -1,34 +1,32 @@
 ## Steps
+### The merge fields will be created by the user typing the name of the field between @{ }.
 
-* Create merge fields by typing "@{}"
+* Create a input Template Name and saving as key into Local Storage
 
-* Then, create a variable to store the field
+* Save the editor string as value into Local Storage
 
-* This field must create input with same label's name, replacing _ to ' ' and capitalize string. Ex.: nome_completo / Nome Completo
+* Retrieve template name and current date to fill the template card rendered above de editor
 
-* This inputs have to fill the merge fields with their target.values ( in other process, when the user is gonna generate a PDF from a previous created template.
+* Search the pattern "@{merge_field}" in the editor string and create an array with 'clean' items, without special chars, ex.: ['NOME COMPLETO', 'ENDERECO']
 
-* Create a btn "+ Novo Template" 
+* This field's name must create input with same label's name, replacing _ to ' ' and capitalize string. Ex.: nome_completo / Nome Completo
 
-* Create a btn to save the template. This functionalities:
- - At the first, save templates data through Local Storage
- - 
-* Create a Template Card Above (same page)
+* Save function (onclick 'Salvar')
+  - Save template name and edition on LocalStorage;
+  - create inputs form from merge fields;
+  - create a new template card with name and last update above editor;
+  - open modal submit;
+
+* Show modal submit feedback, the btn inside modal clean editor and template name input.
+
+* Create pdf function (click on template card)
+  - Open a form modal (to fill the merge fields created)
+
+* Generate pdf function (on click 'Gerar PDF' in form modal)
+  - Replace the merge fields into editor string;
+  - active the lib to generate pdf;
 
 
-* Create feature to generate pdf from click on Template Card;
-
-
-* PDF lib
-
-
-### Save function:
-- Save template LocalStorage;
-- create inputs form from merge fields
-- create a new template card with name and last update;
-- clean template
-- clean name template input
-- close modal;
 
 
 
