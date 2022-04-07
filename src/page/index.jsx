@@ -32,7 +32,7 @@ const CKTextBox = () => {
   const [saveTemplate, setSaveTemplate] = useState({});
   const [storage, setStorage] = useState({});
   const [templateList, setTemplateList] = useState({});
-
+  
   useEffect(() => {
 
     let arrayTemplateNameList = Object.keys(localStorage);
@@ -43,16 +43,13 @@ const CKTextBox = () => {
 
     const items = { ...localStorage };
     console.log(items)
-  
     
-    // const arrayTemplatesList = [];
-    // newTemplate.arrayTemplateList = arrayTemplatesList;
-    // setStorage(items)
   }, []);
   
   // console.log(storage)
   // console.log(templateList)
   
+  const currentDate = new Date().toLocaleDateString();
   
   // TO MAKE THE MERGE FIELDS INPUTS
   const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
@@ -75,32 +72,22 @@ const CKTextBox = () => {
   
   //CREATE AN ARRAY OF OBJECTS TO LOCALSTORAGE
   
-  //REGISTER UPDATE
-  localStorage.setItem("currentDay", new Date().toLocaleDateString());
   
   const saveTemplateLocalStorage = (key, value) => {
     let newTemplate = {name: templateName, editor: template};
     setSaveTemplate(newTemplate)
     localStorage.setItem(key, value);
-    
     setIsSubmitModalOpen(true);
-  }
+  };
   
-  // const removeTemplate = (key) => {
-    
-    // }
-    
-    // const handleOpenSubmitModal = () => {
-      //   setIsSubmitModalOpen(true);
-      //   console.log('salvou');
-  // }
-  
+  //OK BUTTON INSIDE MODAL SUBMIT
   const handleCloseSubmitModal = () => {
+    
     setIsSubmitModalOpen(false);
     setTemplate('Digite aqui..');
     setTemplateName('');
     window.location.reload()
-  }
+  };
  
   return (
     <PageContainer>
@@ -114,9 +101,8 @@ const CKTextBox = () => {
                 <Col key={index} width="25%">
                   <StatusCard 
                     onclick={() => alert(`Abrir formulário para preencher o ${item}`)}
-                    
-                    count={item}
-                    title="modificado: 13/12/2021"
+                    title={item}
+                    update={`Modificado: ${currentDate}`}
                     // count2={item.count2}
                     // title2={item.title2}
                   />
@@ -172,7 +158,7 @@ const CKTextBox = () => {
             type="submit"
             hoverColor={colors.darkGreen}
             text="Salvar"
-            onClick={() => saveTemplateLocalStorage('savedTemplateList', JSON.stringify(template))}
+            onClick={() => saveTemplateLocalStorage(templateName, template)}
           />
         </div>
       </BtnContainer>

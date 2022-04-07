@@ -7,8 +7,8 @@ const StatusCard = props => {
   return (
     <Card onClick={props.onclick}>
       <div>
-        <h4>{props.count}</h4>
-        <h5>{props.title}</h5>
+        <h4>{props.title}</h4>
+        <h5>{props.update}</h5>
       </div>
       <div>
         <h4>{props.count2}</h4>
