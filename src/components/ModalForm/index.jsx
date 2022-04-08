@@ -13,7 +13,8 @@ import {
   InputField, 
   ModalContainer, 
   ModalContent, 
-  TextModal 
+  TextModal,
+  ButtonContainer
 } from './styles';
 // import { ErrorMessage } from '../../pages/Login/styles';
 
@@ -114,49 +115,15 @@ function ModalForm({
               </>: <></>
 
             }
-                <Button
-                  type="submit"
-                  hoverColor={colors.pureGreen}
-                  text="Enviar"
-                  className="btn-modal"
-                />
-
-
-            {resetPassword && (
-              <>
-                <InputField>
-                  <i className="fas fa-lock"></i>
-                  <input
-                    required
-                    type={passwordShown ? "text" : "password"}
-                    name="password"
-                    placeholder="Senha"
-                  />
-                  <img className="eye-toggle" src={visible ? Eye : EyeClose} alt="password toggle" onClick={togglePassword} />
-                </InputField>
-
-                {/* <ErrorMessage className="error-msg" color={error ? colors.alertRed : colors.darkGreen}>{msg}</ErrorMessage> */}
-
-                <Button
-                  type="submit"
-                  hoverColor={colors.pureGreen}
-                  text="Alterar"
-                  className="btn-modal"
-                />
-              </>
-            )
-            }
-
-            {confirmation && (
+            <ButtonContainer>
               <Button
                 type="submit"
                 hoverColor={colors.pureGreen}
-                text="Ok"
-                className="btn-statusmodal"
-                onClick={onRequestClose}
+                text="Enviar"
+                className="btn-modal"
               />
-            )
-            }
+            </ButtonContainer>
+
           </form>
         </ModalContent>
       </Modal>

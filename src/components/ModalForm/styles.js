@@ -79,9 +79,9 @@ export const ModalContent = styled.div`
 
 export const TextModal = styled.p`
   text-align: center;
-  margin-top: 100px;
-  font-weight: 500;
-  font-size: 1rem;
+  margin: 40px auto 20px;
+  font-weight: 600;
+  font-size: 1.3rem;
   color: ${colors.gray2};
 
   /* .textsuccess {
@@ -100,7 +100,7 @@ export const InputField = styled.div`
   max-width: 650px;
   width: 100%;
   background-color: ${colors.gray6};
-  margin: 10px 0;
+  margin: 20px 20px;
   height: 55px;
   border-radius: 50px;
   display: grid;
@@ -121,4 +121,8 @@ export const InputField = styled.div`
   }
 `;
 
-
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
