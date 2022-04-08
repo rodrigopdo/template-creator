@@ -64,8 +64,8 @@ const CKTextBox = () => {
     .replace('}', '')
     ) : null;
     
-    let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
-  let formatTemplateName =  upperCaseList ? upperCaseList.map(item => item.replace('_', ' ')) : null;
+  let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
+  let formatTemplateName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
   console.log(mergeFieldsList);
   console.log(onlyNamesList);
   console.log(upperCaseList);
@@ -179,7 +179,9 @@ const CKTextBox = () => {
 
         <ModalForm 
           isOpen={openModal}
+          fieldsNameList={formatTemplateName}
           onRequestClose={() => handleFormModal(false)} 
+          // onChange={} CREATE FUNCTION TO SAVE ARRAY OF INPUTS TO FILL THE TEMPLATE
         />
 
     </PageContainer>

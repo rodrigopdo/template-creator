@@ -44,14 +44,14 @@ export const ModalContent = styled.div`
     align-items: center;
   }
 
-  .eye-toggle{
+  ${'' /* .eye-toggle{
     position: absolute;
     right: 20px;
     top: 10px;
     width: 22px;
     height: 22px;
     cursor: pointer;
-  }
+  } */}
 }
 
   .btn-modal{
@@ -104,34 +104,21 @@ export const InputField = styled.div`
   height: 55px;
   border-radius: 50px;
   display: grid;
-  grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   align-items: center;
   position: relative;
-
-  i {
-  text-align: center;
-  color: ${colors.gray4};
-  transition: 0.5s;
-  font-size: 1rem;
-  }
   input {
-  background: none;
-  font-weight: 600;
-  font-size: 1rem;
-  color: ${colors.gray1};
+    background: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: ${colors.gray1};
   }
   input::placeholder {
-  color: ${colors.gray4};
-  font-size: 0.8rem;
-  font-weight: 500;
+    color: ${colors.gray4};
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 5px 20px;
   }
 `;
-
-export const InputSmaller = styled(InputField)`
-  height: 45px;
-  margin: 20px 0;
-  font-size: 0.8rem;
-`
 
 

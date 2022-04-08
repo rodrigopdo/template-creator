@@ -9,7 +9,12 @@ import closeImg from "../../assets/img/close.svg";
 import Button from '../Button';
 //STYLES
 import colors from '../../styles/colors'
-import { ImageModal, InputSmaller, ModalContainer, ModalContent, TextModal } from './styles';
+import { 
+  InputField, 
+  ModalContainer, 
+  ModalContent, 
+  TextModal 
+} from './styles';
 // import { ErrorMessage } from '../../pages/Login/styles';
 
 Modal.setAppElement("#root");
@@ -20,11 +25,12 @@ function ModalForm({
   status,
   statusImg,
   onClick,
+  onChange,
   error,
   msg,
   resetPassword,
   confirmation,
-  forgotPassword,
+  fieldsNameList,
   width,
   onClickModal
 }) {
@@ -90,52 +96,35 @@ function ModalForm({
               Preencha os campos
             </TextModal>
 
-            {/* {forgotPassword && */}
+            {fieldsNameList != null ? 
               <>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
-                <InputSmaller>
-                  {/* <i class="fas fa-envelope"></i> */}
-                  <input type="text" name="merge_field" placeholder="merge field" autoFocus required />
-                </InputSmaller>
+                {
+                  fieldsNameList.map((item, index) => (
+                    <InputField key={index}>
+                      <input 
+                        type="text" 
+                        name={item} 
+                        placeholder={item}  
+                        onChange={onChange}
+                        required 
+                      />
+                    </InputField>
+                  ))
+                }
+              </>: <></>
 
-                {/* <ErrorMessage className="error-msg" color={error ? colors.alertRed : colors.darkGreen}>{msg}</ErrorMessage> */}
-
+            }
                 <Button
                   type="submit"
                   hoverColor={colors.pureGreen}
                   text="Enviar"
                   className="btn-modal"
                 />
-              </>
 
-            {/* } */}
 
             {resetPassword && (
               <>
-                <InputSmaller>
+                <InputField>
                   <i className="fas fa-lock"></i>
                   <input
                     required
@@ -144,7 +133,7 @@ function ModalForm({
                     placeholder="Senha"
                   />
                   <img className="eye-toggle" src={visible ? Eye : EyeClose} alt="password toggle" onClick={togglePassword} />
-                </InputSmaller>
+                </InputField>
 
                 {/* <ErrorMessage className="error-msg" color={error ? colors.alertRed : colors.darkGreen}>{msg}</ErrorMessage> */}
 
