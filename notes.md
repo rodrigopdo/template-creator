@@ -1,4 +1,5 @@
 ## Steps
+
 ### The merge fields will be created by the user typing the name of the field between @{ }.
 
 * Create a input Template Name and saving as key into Local Storage
@@ -29,9 +30,17 @@
 
   ### NEXTS COMMITS 
 
-  * Create the form modal and rules to render inputs mapping from the template names array.
+  [] Create the form modal and rules to render inputs mapping from the template names array.
 
-  *  
+  [] Store an array with: template name, [template content, list of merge fields].
+
+  [] Set the click on card event to get the respectives inputs.
+
+  [] Set form modal button click event to:
+    - get the input values to replace the pattern '@{merge_field} with those values,
+    - generate the pdf  
+
+  [] Setup the update value to be fixed creation/last edition.
 
 
 

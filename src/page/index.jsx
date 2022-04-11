@@ -33,23 +33,45 @@ const CKTextBox = () => {
   const [saveTemplate, setSaveTemplate] = useState({});
   const [storage, setStorage] = useState({});
   const [templateList, setTemplateList] = useState({});
+  const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
+ 
+
+  const inputModalEl = useRef();
+  console.log(inputModalEl)
+
   
+
+  const inputValue = inputModalEl.current;
+  console.log(inputValue)
+
   useEffect(() => {
 
     let arrayTemplateNameList = Object.keys(localStorage);
-      
-    console.log(arrayTemplateNameList)
-  
     setTemplateList(arrayTemplateNameList)
+    console.log(arrayTemplateNameList)
+      
+    const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
+    const getItemtwo = getFullTemplate[1];
+    console.log(getItemtwo)
 
     const items = { ...localStorage };
     console.log(items)
+  
+  }, []);
+
+  //HOOK TO FILL MERGE FIELDS IN PDF
+  useEffect(() => {
     
+    const getTemplateData = () => {
+      const templateData = (JSON.parse(localStorage.getItem(templateName)))     
+      const getTemplateString = templateData[0];
+      console.log(getTemplateString)
+      getTemplateString.replace()
+    } 
+
   }, []);
   
-  // console.log(storage)
-  // console.log(templateList)
-  
+
   const currentDate = new Date().toLocaleDateString();
   
   // TO MAKE THE MERGE FIELDS INPUTS
@@ -64,20 +86,16 @@ const CKTextBox = () => {
     .replace('}', '')
     ) : null;
     
-  let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
-  let formatTemplateName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
-  console.log(mergeFieldsList);
-  console.log(onlyNamesList);
-  console.log(upperCaseList);
-  console.log(formatTemplateName);
-  
-  //CREATE AN ARRAY OF OBJECTS TO LOCALSTORAGE
-  
-  
-  const saveTemplateLocalStorage = (key, value) => {
-    let newTemplate = {name: templateName, editor: template};
-    setSaveTemplate(newTemplate)
-    localStorage.setItem(key, value);
+    let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
+    let formattedTemplateListName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
+    console.log(mergeFieldsList);
+    console.log(onlyNamesList);
+    console.log(upperCaseList);
+    console.log(formattedTemplateListName);
+    
+  const saveTemplateLocalStorage = () => {
+    localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName]));
+
     setIsSubmitModalOpen(true);
   };
   
@@ -91,8 +109,20 @@ const CKTextBox = () => {
   };
 
   //TOGGLE FORM MODAL
-  const handleFormModal = (status) => {
+  const handleFormModal = (status, i) => {
+
     setOpenModal(status);
+
+    const getFullTemplate = (JSON.parse(localStorage.getItem('Carta de Alforria')))
+    const getArrayOfMergeFieldNames= getFullTemplate[1];
+    console.log(getArrayOfMergeFieldNames)
+   
+    setInputMergeFieldValue(getArrayOfMergeFieldNames)
+  }
+
+  //FILL MERGE FIELDS AND GENERATE PDF
+  const fillPdfMergeFields = () => {
+
   }
  
   return (
@@ -106,7 +136,7 @@ const CKTextBox = () => {
               templateList.map((item, index) => (
                 <Col key={index} width="25%">
                   <StatusCard 
-                    onclick={() => handleFormModal(true)}
+                    onclick={() => handleFormModal(true, index)}
                     title={item}
                     update={`Modificado: ${currentDate}`}
                     // count2={item.count2}
@@ -163,7 +193,7 @@ const CKTextBox = () => {
             type="submit"
             hoverColor={colors.darkGreen}
             text="Salvar"
-            onClick={() => saveTemplateLocalStorage(templateName, template)}
+            onClick={saveTemplateLocalStorage}
           />
         </div>
       </BtnContainer>
@@ -178,10 +208,13 @@ const CKTextBox = () => {
         />
 
         <ModalForm 
+          refElement={inputModalEl}
           isOpen={openModal}
-          fieldsNameList={formatTemplateName}
+          fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
-          // onChange={} CREATE FUNCTION TO SAVE ARRAY OF INPUTS TO FILL THE TEMPLATE
+          // placeholder={inputMergeFieldValue}
+          value={inputModalEl.current}
+          // onChange={(e) => setTypedNameMergeField(e.target.value)} 
         />
 
     </PageContainer>

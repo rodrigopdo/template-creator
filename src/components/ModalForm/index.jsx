@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from "react-modal";
 
 //ASSETS
@@ -33,7 +33,11 @@ function ModalForm({
   confirmation,
   fieldsNameList,
   width,
-  onClickModal
+  onClickModal,
+  value,
+  refElement,
+  placeholder,
+  index
 }) {
 
   const customStyles = {
@@ -64,14 +68,28 @@ function ModalForm({
       zIndex: 9999
     },
   };
+  
+  // const togglePassword = () => {
+  //   setPasswordShown(!passwordShown);
+  //   setVisible(!visible);
+  // };
 
-  const [passwordShown, setPasswordShown] = useState(false);
-  const [visible, setVisible] = useState(false);
+  // const [passwordShown, setPasswordShown] = useState(false);
+  // const [visible, setVisible] = useState(false);
 
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
-    setVisible(!visible);
-  };
+  const [typedNameMergeField, setTypedNameMergeField] = useState();
+  const inputModalEl = useRef();
+
+  useEffect(() => {
+    inputModalEl.current = typedNameMergeField;
+    console.log(typedNameMergeField)
+  }, [typedNameMergeField]);
+
+
+  const getInputValue = (e) => {
+    const typedValue = e.inputModalEl.current.value;
+    setTypedNameMergeField(typedValue);
+  }
 
   return (
     <ModalContainer>
@@ -104,9 +122,11 @@ function ModalForm({
                     <InputField key={index}>
                       <input 
                         type="text" 
+                        ref={inputModalEl}
                         name={item} 
-                        placeholder={item}  
-                        onChange={onChange}
+                        placeholder={item}
+                        onChange={e => setTypedNameMergeField(e.target.value)}  
+                        value={typedNameMergeField}
                         required 
                       />
                     </InputField>
