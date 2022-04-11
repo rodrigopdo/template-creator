@@ -27,6 +27,7 @@ function ModalForm({
   statusImg,
   onClick,
   onChange,
+  onBlur,
   error,
   msg,
   resetPassword,
@@ -77,20 +78,6 @@ function ModalForm({
   // const [passwordShown, setPasswordShown] = useState(false);
   // const [visible, setVisible] = useState(false);
 
-  const [typedNameMergeField, setTypedNameMergeField] = useState();
-  const inputModalEl = useRef();
-
-  useEffect(() => {
-    inputModalEl.current = typedNameMergeField;
-    console.log(typedNameMergeField)
-  }, [typedNameMergeField]);
-
-
-  const getInputValue = (e) => {
-    const typedValue = e.inputModalEl.current.value;
-    setTypedNameMergeField(typedValue);
-  }
-
   return (
     <ModalContainer>
       <Modal
@@ -122,11 +109,13 @@ function ModalForm({
                     <InputField key={index}>
                       <input 
                         type="text" 
-                        ref={inputModalEl}
+                        id={`input${index}`}
+                        ref={refElement}
                         name={item} 
                         placeholder={item}
-                        onChange={e => setTypedNameMergeField(e.target.value)}  
-                        value={typedNameMergeField}
+                        onChange={onChange}  
+                        onBlur={onBlur}
+                        value={value}
                         required 
                       />
                     </InputField>

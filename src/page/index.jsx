@@ -34,15 +34,13 @@ const CKTextBox = () => {
   const [storage, setStorage] = useState({});
   const [templateList, setTemplateList] = useState({});
   const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
- 
+  const [typedNameMergeField, setTypedNameMergeField] = useState('');
 
-  const inputModalEl = useRef();
-  console.log(inputModalEl)
+  // const inputModalEl = useRef('dfdfd');
+  // console.log(inputModalEl.current)
 
-  
-
-  const inputValue = inputModalEl.current;
-  console.log(inputValue)
+  // const inputValue = inputModalEl.current;
+  // console.log(inputValue)
 
   useEffect(() => {
 
@@ -50,9 +48,9 @@ const CKTextBox = () => {
     setTemplateList(arrayTemplateNameList)
     console.log(arrayTemplateNameList)
       
-    const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
-    const getItemtwo = getFullTemplate[1];
-    console.log(getItemtwo)
+    // const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
+    // const getItemtwo = getFullTemplate[1];
+    // console.log(getItemtwo)
 
     const items = { ...localStorage };
     console.log(items)
@@ -60,18 +58,28 @@ const CKTextBox = () => {
   }, []);
 
   //HOOK TO FILL MERGE FIELDS IN PDF
-  useEffect(() => {
+  // useEffect(() => {
     
-    const getTemplateData = () => {
-      const templateData = (JSON.parse(localStorage.getItem(templateName)))     
-      const getTemplateString = templateData[0];
-      console.log(getTemplateString)
-      getTemplateString.replace()
-    } 
+  //   const getTemplateData = () => {
+  //     const templateData = (JSON.parse(localStorage.getItem(templateName)))     
+  //     const getTemplateString = templateData[0];
+  //     console.log(getTemplateString)
+  //     getTemplateString.replace()
+  //   } 
 
-  }, []);
+  // }, []);
+
+  //  useEffect(() => {
+  //   inputModalEl.current = typedNameMergeField;
+  // }, [typedNameMergeField]);
+  
   
 
+  // const getInputValue = (e) => {
+  //   const typedValue = e.inputModalEl.current.value;
+  //   setTypedNameMergeField(typedValue);
+  // }
+  
   const currentDate = new Date().toLocaleDateString();
   
   // TO MAKE THE MERGE FIELDS INPUTS
@@ -109,11 +117,11 @@ const CKTextBox = () => {
   };
 
   //TOGGLE FORM MODAL
-  const handleFormModal = (status, i) => {
+  const handleFormModal = (status, templateStorageKey) => {
 
     setOpenModal(status);
 
-    const getFullTemplate = (JSON.parse(localStorage.getItem('Carta de Alforria')))
+    const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
     const getArrayOfMergeFieldNames= getFullTemplate[1];
     console.log(getArrayOfMergeFieldNames)
    
@@ -121,10 +129,28 @@ const CKTextBox = () => {
   }
 
   //FILL MERGE FIELDS AND GENERATE PDF
+  // let inputValueArray = [];
+  
+  let inputValueArray = []; 
+  // if(inputValueArray != '') {
+  //   localStorage.getItem("typedInput");
+  // }else {
+  //   inputValueArray = localStorage.setItem("typedInput", JSON.stringify([]));
+  // }
+  
   const fillPdfMergeFields = () => {
-
+    for(let i = 0; i <= inputValueArray.length; i++) {
+      inputValueArray.push(document.getElementById(`input${i}`));
+      localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
+      console.log(inputValueArray);
+    }
   }
+  
+  console.log(localStorage.getItem('typedInputList'));
+  console.log(typedNameMergeField);
  
+  console.log(document.getElementById('input1'));
+  console.log(templateName)
   return (
     <PageContainer>
       {templateList.length > 0 ?
@@ -136,7 +162,7 @@ const CKTextBox = () => {
               templateList.map((item, index) => (
                 <Col key={index} width="25%">
                   <StatusCard 
-                    onclick={() => handleFormModal(true, index)}
+                    onclick={() => handleFormModal(true, item)}
                     title={item}
                     update={`Modificado: ${currentDate}`}
                     // count2={item.count2}
@@ -208,13 +234,12 @@ const CKTextBox = () => {
         />
 
         <ModalForm 
-          refElement={inputModalEl}
           isOpen={openModal}
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
-          // placeholder={inputMergeFieldValue}
-          value={inputModalEl.current}
-          // onChange={(e) => setTypedNameMergeField(e.target.value)} 
+          // value={typedNameMergeField}
+          onChange={(e) => setTypedNameMergeField(e.target.value)}
+          onBlur={fillPdfMergeFields} 
         />
 
     </PageContainer>

@@ -8,7 +8,7 @@
 
 * Retrieve template name and current date to fill the template card rendered above de editor
 
-* Search the pattern "@{merge_field}" in the editor string and create an array with 'clean' items, without special chars, ex.: ['NOME COMPLETO', 'ENDERECO']
+j{j* Search the pattern "@{merge_field}" in the editor string and create an array with 'clean' items, without special chars, ex.: ['NOME COMPLETO', 'ENDERECO']
 
 * This field's name must create input with same label's name, replacing _ to ' ' and capitalize string. Ex.: nome_completo / Nome Completo
 
@@ -30,11 +30,11 @@
 
   ### NEXTS COMMITS 
 
-  [] Create the form modal and rules to render inputs mapping from the template names array.
+  [*] Create the form modal and rules to render inputs mapping from the template names array.
 
-  [] Store an array with: template name, [template content, list of merge fields].
+  [*] Store an array with: template name, [template content, list of merge fields].
 
-  [] Set the click on card event to get the respectives inputs.
+  [*] Set the click on card event to get the respectives inputs.
 
   [] Set form modal button click event to:
     - get the input values to replace the pattern '@{merge_field} with those values,
