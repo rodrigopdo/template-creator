@@ -141,7 +141,7 @@ const CKTextBox = () => {
       if(document.getElementById(`input${i}`) != null) {
         inputEl = document.getElementById(`input${i}`).value;
         inputValueArray.push(inputEl);
-        localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
+        // localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
         console.log(inputValueArray);
       }
       }
