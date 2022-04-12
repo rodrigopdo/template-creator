@@ -36,12 +36,14 @@ j{j* Search the pattern "@{merge_field}" in the editor string and create an arra
 
   [*] Set the click on card event to get the respectives inputs.
 
-  [] Set form modal button click event to:
-    - save the input values into an array
-    - get the input values to replace the pattern '@{merge_field} with those values,
+  [*] Save the input values into an array onChange value.
+
+  [] Install lib to generate PDF.
+
+  [] Get the input values to replace the pattern '@{merge_field} with those values,
     - generate the pdf  
 
-  [] Setup the update value to be fixed creation/last edition.
+  [] Setup the update date to be fixed creation/last edition.
 
 
 

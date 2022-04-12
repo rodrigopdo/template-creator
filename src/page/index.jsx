@@ -16,7 +16,7 @@ import {
   Title,
   CardsWrapper,
   InputTemplateName 
-} from './style';
+} from './styles';
 import ModalForm from '../components/ModalForm';
 
 const CKTextBox = () => {
@@ -33,6 +33,7 @@ const CKTextBox = () => {
   const [templateList, setTemplateList] = useState({});
   const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
   const [typedNameMergeField, setTypedNameMergeField] = useState('');
+  const [lastUpdate, setLastUpdate] = useState('');
 
   // const inputModalEl = useRef('dfdfd');
   // console.log(inputModalEl.current)
@@ -49,6 +50,10 @@ const CKTextBox = () => {
     // const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
     // const getItemtwo = getFullTemplate[1];
     // console.log(getItemtwo)
+    const storedTime = localStorage.getItem('currentTime');
+    if(!storedTime) localStorage.setItem('currentTime', new Date().toLocaleDateString());
+    setLastUpdate(localStorage.getItem('currentTime'));
+
 
     const items = { ...localStorage };
     console.log(items)
@@ -100,8 +105,9 @@ const CKTextBox = () => {
     console.log(formattedTemplateListName);
     
   const saveTemplateLocalStorage = () => {
-    localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName]));
 
+    localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName, currentDate]));
+    
     setIsSubmitModalOpen(true);
   };
   
@@ -126,32 +132,21 @@ const CKTextBox = () => {
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
   }
 
-  //FILL MERGE FIELDS AND GENERATE PDF
-  // let inputValueArray = [];
-  
-  let inputValueArray = []; 
-  // if(inputValueArray != '') {
-  //   localStorage.getItem("typedInput");
-  // }else {
-  //   inputValueArray = localStorage.setItem("typedInput", JSON.stringify([]));
-  // }
-  
   const fillPdfMergeFields = () => {
     
     let inputValueArray = [];
+    let inputEl;
 
     for(let i = 0; i <= inputValueArray.length; i++) {
-      inputValueArray.push(document.getElementById(`input${i}`).value);
-      localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
-      console.log(inputValueArray);
-    }
+      if(document.getElementById(`input${i}`) != null) {
+        inputEl = document.getElementById(`input${i}`).value;
+        inputValueArray.push(inputEl);
+        localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
+        console.log(inputValueArray);
+      }
+      }
   }
-  
-  console.log(localStorage.getItem('typedInputList'));
-  console.log(typedNameMergeField);
- 
-  console.log(document.getElementById('input1'));
-  console.log(templateName)
+
   return (
     <PageContainer>
       {templateList.length > 0 ?
@@ -165,9 +160,7 @@ const CKTextBox = () => {
                   <StatusCard 
                     onclick={() => handleFormModal(true, item)}
                     title={item}
-                    update={`Modificado: ${currentDate}`}
-                    // count2={item.count2}
-                    // title2={item.title2}
+                    update={`Modificado: ${lastUpdate}`}
                   />
                 </Col>
               ))
@@ -238,9 +231,8 @@ const CKTextBox = () => {
           isOpen={openModal}
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
-          // value={typedNameMergeField}
-          // onChange={(e) => setTypedNameMergeField(e.target.value)}
           onChange={fillPdfMergeFields} 
+          // onClick={}CREATE FUNCTION TO REPLACE MERGE FIELDS AND GEN. PDF
         />
 
     </PageContainer>
