@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
 // import useStore from '../stores/useStore';
-
 //COMPONENTS
 import Button from '../components/Button';
 import ModalSubmit from '../components/ModalSubmit';
@@ -139,8 +137,11 @@ const CKTextBox = () => {
   // }
   
   const fillPdfMergeFields = () => {
+    
+    let inputValueArray = [];
+
     for(let i = 0; i <= inputValueArray.length; i++) {
-      inputValueArray.push(document.getElementById(`input${i}`));
+      inputValueArray.push(document.getElementById(`input${i}`).value);
       localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
       console.log(inputValueArray);
     }
@@ -238,8 +239,8 @@ const CKTextBox = () => {
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
           // value={typedNameMergeField}
-          onChange={(e) => setTypedNameMergeField(e.target.value)}
-          onBlur={fillPdfMergeFields} 
+          // onChange={(e) => setTypedNameMergeField(e.target.value)}
+          onChange={fillPdfMergeFields} 
         />
 
     </PageContainer>
