@@ -38,7 +38,7 @@ function ModalForm({
   value,
   refElement,
   placeholder,
-  index
+  onClickModalFillFields
 }) {
 
   const customStyles = {
@@ -126,13 +126,20 @@ function ModalForm({
             }
             <ButtonContainer>
               <Button
+                type="button"
+                bgColor="transparent"
+                color={colors.pureGreen}
+                text="Preencher Campos"
+                className="btn-modal"
+                onClick={onClickModalFillFields}
+              />
+              <Button
                 type="submit"
                 hoverColor={colors.pureGreen}
-                text="Enviar"
+                text="Gerar PDF"
                 className="btn-modal"
               />
             </ButtonContainer>
-
           </form>
         </ModalContent>
       </Modal>

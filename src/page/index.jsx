@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import useStore from '../stores/useStore';
+
 //COMPONENTS
 import Button from '../components/Button';
 import ModalSubmit from '../components/ModalSubmit';
+import ModalForm from '../components/ModalForm';
 import StatusCard from '../components/StatusCard';
 
 //STYLES
@@ -17,7 +19,6 @@ import {
   CardsWrapper,
   InputTemplateName 
 } from './styles';
-import ModalForm from '../components/ModalForm';
 
 const CKTextBox = () => {
   
@@ -34,6 +35,8 @@ const CKTextBox = () => {
   const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
   const [typedNameMergeField, setTypedNameMergeField] = useState('');
   const [lastUpdate, setLastUpdate] = useState('');
+  const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
+  // const [currentTemplate, setTemplate] = useState('');
 
   // const inputModalEl = useRef('dfdfd');
   // console.log(inputModalEl.current)
@@ -99,6 +102,7 @@ const CKTextBox = () => {
     
     let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
     let formattedTemplateListName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
+
     console.log(mergeFieldsList);
     console.log(onlyNamesList);
     console.log(upperCaseList);
@@ -127,24 +131,57 @@ const CKTextBox = () => {
 
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
     const getArrayOfMergeFieldNames= getFullTemplate[1];
-    console.log(getArrayOfMergeFieldNames)
-   
+    const getCurrentTemplateString = getFullTemplate[0];
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
+    setTemplate(getCurrentTemplateString.toString()); 
+
+    console.log(getArrayOfMergeFieldNames);
+    console.log(getCurrentTemplateString);
   }
+  let inputValueArray = [];
 
   const fillPdfMergeFields = () => {
     
-    let inputValueArray = [];
     let inputEl;
-
+    
     for(let i = 0; i <= inputValueArray.length; i++) {
       if(document.getElementById(`input${i}`) != null) {
         inputEl = document.getElementById(`input${i}`).value;
         inputValueArray.push(inputEl);
         // localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
-        console.log(inputValueArray);
+        setArrayOfInputValue(inputValueArray)
       }
-      }
+    }
+    // console.log(inputValueArray);
+    // console.log(arrayOfInputValue);
+    console.log(template);
+  }
+  console.log(arrayOfInputValue);
+
+  let templateReplaced = "";
+  
+  const fillMergeFields = (e) => {
+
+    for (let item in arrayOfInputValue) {
+      if(item != null) {
+        templateReplaced = template.replace( /[@][{][\w.]+[}]/ , arrayOfInputValue[item]);
+        setTemplate(templateReplaced);
+        console.log(item);
+      } 
+    }
+
+    // for (let i = 0; i <= arrayOfInputValue.length; i++) {
+
+    //   templateReplaced = template.replace(/[@][{][\w.]+[}]/, arrayOfInputValue[i])
+      
+    //   console.log(arrayOfInputValue[0]);
+    // }
+    console.log(arrayOfInputValue);
+    console.log(arrayOfInputValue.length);
+    console.log(template);
+    console.log(templateReplaced);
+
+    e.preventDefault();
   }
 
   return (
@@ -231,8 +268,8 @@ const CKTextBox = () => {
           isOpen={openModal}
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
-          onChange={fillPdfMergeFields} 
-          // onClick={}CREATE FUNCTION TO REPLACE MERGE FIELDS AND GEN. PDF
+          onChange={() => fillPdfMergeFields(templateName)} 
+          onClickModalFillFields={fillMergeFields}
         />
 
     </PageContainer>

@@ -54,10 +54,10 @@ export const ModalContent = styled.div`
   } */}
 }
 
-  .btn-modal{
+  ${'' /* .btn-modal{
     margin: 0 !important;
     width: 130px;
-  }
+  } */}
 
   .btn-statusmodal{
     margin-top: 30px;
@@ -125,4 +125,10 @@ export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+  button:nth-child(1) {
+    margin-right: 10px;
+  }
+  button:nth-child(2) {
+    margin-left: 10px;
+  }
 `;
