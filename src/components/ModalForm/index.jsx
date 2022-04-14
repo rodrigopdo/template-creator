@@ -38,7 +38,8 @@ function ModalForm({
   value,
   refElement,
   placeholder,
-  onClickModalFillFields
+  onClickModalFillFields,
+  modalTitle
 }) {
 
   const customStyles = {
@@ -53,7 +54,7 @@ function ModalForm({
       minWidth: '250px',
       maxWidth: '850px',
       height: 'auto',
-      maxHeight: '650px',
+      maxHeight: '100%',
       borderRadius: '10px',
       display: 'flex',
       alignItems: 'center',
@@ -86,6 +87,9 @@ function ModalForm({
         style={customStyles}
       >
         <ModalContent>
+          <TextModal className="textmodal">
+           {modalTitle}
+          </TextModal>
           <button
             type="button"
             onClick={onRequestClose}
@@ -98,9 +102,6 @@ function ModalForm({
             {/* <div>
               <ImageModal className={statusImg} />
             </div> */}
-            <TextModal className="textmodal">
-              Preencha os campos
-            </TextModal>
 
             {fieldsNameList != null ? 
               <>

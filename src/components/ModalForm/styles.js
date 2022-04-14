@@ -81,7 +81,7 @@ export const TextModal = styled.p`
   text-align: center;
   margin: 40px auto 20px;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: ${colors.gray2};
 
   /* .textsuccess {
@@ -104,7 +104,7 @@ export const InputField = styled.div`
   height: 55px;
   border-radius: 50px;
   display: grid;
-  padding: 0 0.4rem;
+  padding: 0 1.5rem;
   align-items: center;
   position: relative;
   input {
@@ -117,7 +117,7 @@ export const InputField = styled.div`
     color: ${colors.gray4};
     font-size: 0.8rem;
     font-weight: 500;
-    padding: 5px 20px;
+    padding: 5px 0;
   }
 `;
 

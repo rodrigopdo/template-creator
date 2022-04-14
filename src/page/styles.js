@@ -6,6 +6,7 @@ import { Row } from '../styles/grid';
 export const PageContainer = styled.div`
   display: flex;
   margin: 80px auto 10px;
+  padding: 0 30px;
   flex-direction: column;
   max-width: 1000px;
 `;
@@ -30,16 +31,24 @@ export const CardsWrapper = styled(Row)`
   margin: 30px auto 40px;
 `;
 
-export const InputTemplateName = styled.div`
-  margin: 10px auto 10px 0;
+export const HeaderEditor = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 10px 15px;
   input {
     color: ${colors.gray1};
     font-size: 1.2rem;
     font-weight: 600;
+    border-bottom: 1px solid ${colors.gray6};
     &::placeholder {
       color: ${colors.gray4};
       font-size: 0.9rem;
     }
+  }
+  p {
+    color: ${colors.gray4};
+    font-size: 0.8rem;
   }
 `;
 

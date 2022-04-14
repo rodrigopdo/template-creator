@@ -17,7 +17,7 @@ import {
   PageContainer, 
   Title,
   CardsWrapper,
-  InputTemplateName 
+  HeaderEditor
 } from './styles';
 
 const CKTextBox = () => {
@@ -134,7 +134,7 @@ const CKTextBox = () => {
     const getCurrentTemplateString = getFullTemplate[0];
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
     setTemplate(getCurrentTemplateString.toString()); 
-
+    setTemplateName(templateStorageKey);
     console.log(getArrayOfMergeFieldNames);
     console.log(getCurrentTemplateString);
   }
@@ -161,21 +161,13 @@ const CKTextBox = () => {
   let templateReplaced = "";
   
   const fillMergeFields = (e) => {
+    
+    for (let i = 0; i <= arrayOfInputValue.length; i++) {
 
-    for (let item in arrayOfInputValue) {
-      if(item != null) {
-        templateReplaced = template.replace( /[@][{][\w.]+[}]/ , arrayOfInputValue[item]);
-        setTemplate(templateReplaced);
-        console.log(item);
-      } 
-    }
-
-    // for (let i = 0; i <= arrayOfInputValue.length; i++) {
-
-    //   templateReplaced = template.replace(/[@][{][\w.]+[}]/, arrayOfInputValue[i])
+      templateReplaced = template.replace(/[@][{][\w.]+[}]/, arrayOfInputValue[i])
       
-    //   console.log(arrayOfInputValue[0]);
-    // }
+      console.log(arrayOfInputValue[0]);
+    }
     console.log(arrayOfInputValue);
     console.log(arrayOfInputValue.length);
     console.log(template);
@@ -207,15 +199,20 @@ const CKTextBox = () => {
       }
       <Title>Criar novo Template</Title>
 
-      <InputTemplateName>
-        <input 
-          autoFocus
-          maxLength={40} 
-          placeholder='Nome do template..'
-          value={templateName}
-          onChange={(e) => setTemplateName(e.target.value)}
-        />
-      </InputTemplateName> 
+      <HeaderEditor>
+        <div>
+          <input 
+            autoFocus
+            maxLength={40} 
+            placeholder='Nome do template..'
+            value={templateName}
+            onChange={(e) => setTemplateName(e.target.value)}
+          />
+        </div>
+        <div>
+          <p>Exemplo modelo de campo de entrada de texto: <strong>@{'{nome_completo}'}</strong></p>
+        </div>
+      </HeaderEditor> 
       
       <CKEditor id="ckeditor" 
         editor={ ClassicEditor }
@@ -270,6 +267,7 @@ const CKTextBox = () => {
           onRequestClose={() => handleFormModal(false)} 
           onChange={() => fillPdfMergeFields(templateName)} 
           onClickModalFillFields={fillMergeFields}
+          modalTitle={`Campos entrada de texto do ${templateName}`}
         />
 
     </PageContainer>

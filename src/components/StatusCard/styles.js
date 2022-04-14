@@ -11,7 +11,7 @@ export const Card = styled.div `
   min-height: 130px;
   flex-direction: column;
   padding: 35px 25px;
-  background-image:  ${({ theme }) => theme.cardBg};
+  background-color: ${colors.snow};
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 14px;
   border-radius: 5px;
   transition: color .9s ease 0s;
@@ -33,7 +33,7 @@ export const Card = styled.div `
       left: auto;
       max-width: 80%;
       font-size: 0.8rem;
-      color: ${({ theme }) => theme.cardTitle};
+      color: ${colors.gray3};
       opacity: 0.8;
       @media(max-width: 870px) {
         font-size: 0.7rem;
@@ -47,7 +47,7 @@ export const Card = styled.div `
       right: 20px;
       font-size: 0.7rem;
       font-weight: 500;
-      color: ${({ theme }) => theme.cardSubTitle};
+      color: ${colors.gray3};
     }
   }
 
