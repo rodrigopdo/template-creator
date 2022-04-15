@@ -46,6 +46,8 @@ const Editor = () => {
     
   }, [localStorage]);
 
+  console.log(localStorage);
+
   useEffect(() => {
     
   let arrayTemplateNameList = Object.keys(localStorage);

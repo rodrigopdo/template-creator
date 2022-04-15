@@ -116,7 +116,10 @@ function ModalForm({
                     </InputField>
                   ))
                 }
-              </>: <></>
+              </>: 
+              <div>
+                Tá zerado mano!
+              </div>
 
             }
             <ButtonContainer>
@@ -124,16 +127,18 @@ function ModalForm({
                 type="button"
                 bgColor="transparent"
                 color={colors.pureGreen}
-                text="Preencher Campos"
+                text="Fechar"
+                onClick={onRequestClose}
                 className="btn-modal"
-                onClick={onClickModalFillFields}
               />
               <Button
-                type="submit"
+                type="button"
                 hoverColor={colors.pureGreen}
-                text="Gerar PDF"
+                  text="Preencher Campos"
+                disabled={fieldsNameList == null}
                 className="btn-modal"
-                onClick={onClickPdf}
+                onClick={onClickModalFillFields}
+                
               />
             </ButtonContainer>
           </form>

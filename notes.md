@@ -30,6 +30,8 @@
 
 [*] Handle Template name requirement when saving with empty field;
 
+[] Handle Modal Form function (onclick on a Card)
+  - 
 
 
 
