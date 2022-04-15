@@ -28,7 +28,7 @@ const CKTextBox = () => {
   const [disabled, setDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [statusCards, setStatusCards] = useState([]);
   const [templateName, setTemplateName] = useState('');
   const [saveTemplate, setSaveTemplate] = useState({});
@@ -90,7 +90,7 @@ const CKTextBox = () => {
   //TOGGLE FORM MODAL
   const handleFormModal = (status, templateStorageKey) => {
 
-    setOpenModal(status);
+    setIsFormModalOpen(status);
 
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
     const getArrayOfMergeFieldNames= getFullTemplate[1];
@@ -116,27 +116,23 @@ const CKTextBox = () => {
       }
     }
   }
-  console.log(arrayOfInputValue);
+  // console.log(arrayOfInputValue);
   
   const replaceMergeFields = (e) => {
     
     let templateReplaced = template;
-    // let newArrayOfValue = Object.keys(arrayOfInputValue);
     
     arrayOfInputValue.map((item) => {
       templateReplaced = templateReplaced.replace(/[@][{][\w.]+[}]/, item)
         setTemplate(templateReplaced)
       });
       
-      // console.log(templateReplaced);
-      // console.log(newArrayOfValue);
-    
     e.preventDefault();
+    setIsFormModalOpen(false)
   }
   
   console.log(template);
   
-  //GENERATE PDF
   const generatePdf = (e) => {
     
     let doc = parser.parseFromString(htmlString, "text/html");
@@ -248,7 +244,7 @@ const CKTextBox = () => {
         />
 
         <ModalForm 
-          isOpen={openModal}
+          isOpen={isFormModalOpen}
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
           onChange={() => fillPdfMergeFields(templateName)} 
