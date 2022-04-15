@@ -23,6 +23,7 @@
     "@testing-library/user-event": "^13.5.0",
     "css-loader": "5",
     "jodit-react": "^1.2.18",
+    "jspdf": "^2.5.1",
     "postcss-loader": "4",
     "raw-loader": "4",
     "react": "^17.0.2",

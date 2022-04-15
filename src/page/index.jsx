@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import jsPDF from 'jspdf';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import useStore from '../stores/useStore';
@@ -36,6 +37,7 @@ const CKTextBox = () => {
   const [typedNameMergeField, setTypedNameMergeField] = useState('');
   const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
+  const [showPageToSave, setShowPageToSave] = useState(false);
   // const [currentTemplate, setTemplate] = useState('');
 
   // const inputModalEl = useRef('dfdfd');
@@ -49,7 +51,7 @@ const CKTextBox = () => {
     let arrayTemplateNameList = Object.keys(localStorage);
     setTemplateList(arrayTemplateNameList)
     console.log(arrayTemplateNameList)
-      
+    console.log(localStorage)  
     // const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
     // const getItemtwo = getFullTemplate[1];
     // console.log(getItemtwo)
@@ -152,29 +154,51 @@ const CKTextBox = () => {
         setArrayOfInputValue(inputValueArray)
       }
     }
-    // console.log(inputValueArray);
-    // console.log(arrayOfInputValue);
-    console.log(template);
   }
-  console.log(arrayOfInputValue);
-
-  let templateReplaced = "";
   
-  const fillMergeFields = (e) => {
+  const replaceMergeFields = (e) => {
     
-    for (let i = 0; i <= arrayOfInputValue.length; i++) {
-
-      templateReplaced = template.replace(/[@][{][\w.]+[}]/, arrayOfInputValue[i])
+    let templateReplaced = template;
+    // let newArrayOfValue = Object.keys(arrayOfInputValue);
+    
+    arrayOfInputValue.map((item) => {
+      templateReplaced = templateReplaced.replace(/[@][{][\w.]+[}]/, item)
+        setTemplate(templateReplaced)
+      });
       
-      console.log(arrayOfInputValue[0]);
-    }
-    console.log(arrayOfInputValue);
-    console.log(arrayOfInputValue.length);
-    console.log(template);
-    console.log(templateReplaced);
-
+      // console.log(templateReplaced);
+      // console.log(arrayOfInputValue);
+      // console.log(newArrayOfValue);
+    
     e.preventDefault();
   }
+  
+  console.log(template);
+  
+  //GENERATE PDF
+  const generatePdf = (e) => {
+    
+    let doc = parser.parseFromString(htmlString, "text/html");
+    let parser = new DOMParser();
+    const htmlString = template.toString();
+    console.log(doc)
+    // let pdf = new jsPDF();
+    // pdf.text(doc, 10, 10);
+    // pdf.save('a4.pdf');
+    window.print();
+    e.preventDefault();
+  }
+
+  const SavePage = () => {
+    return (
+      <div>
+       
+      </div>
+    )
+  }
+
+
+
 
   return (
     <PageContainer>
@@ -213,6 +237,7 @@ const CKTextBox = () => {
           <p>Exemplo modelo de campo de entrada de texto: <strong>@{'{nome_completo}'}</strong></p>
         </div>
       </HeaderEditor> 
+      <SavePage />
       
       <CKEditor id="ckeditor" 
         editor={ ClassicEditor }
@@ -266,8 +291,9 @@ const CKTextBox = () => {
           fieldsNameList={inputMergeFieldValue}
           onRequestClose={() => handleFormModal(false)} 
           onChange={() => fillPdfMergeFields(templateName)} 
-          onClickModalFillFields={fillMergeFields}
+          onClickModalFillFields={replaceMergeFields}
           modalTitle={`Campos entrada de texto do ${templateName}`}
+          onClickPdf={generatePdf}
         />
 
     </PageContainer>

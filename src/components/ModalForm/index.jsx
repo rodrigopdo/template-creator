@@ -39,7 +39,8 @@ function ModalForm({
   refElement,
   placeholder,
   onClickModalFillFields,
-  modalTitle
+  modalTitle,
+  onClickPdf
 }) {
 
   const customStyles = {
@@ -139,6 +140,7 @@ function ModalForm({
                 hoverColor={colors.pureGreen}
                 text="Gerar PDF"
                 className="btn-modal"
+                onClick={onClickPdf}
               />
             </ButtonContainer>
           </form>
