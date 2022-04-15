@@ -24,10 +24,9 @@ import {
 
 const Editor = () => {
   
-  const templateInicialValue = "Digite aqui..";
-
-  const [template, setTemplate] = useState(templateInicialValue);
+  const [template, setTemplate] = useState('');
   const [isCancelButtonDisabled, setIsCancelButtonDisabled] = useState(true);
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -38,31 +37,41 @@ const Editor = () => {
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
   
+  //UPDATE CHANGES
   useEffect(() => {
     
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateName)))
     const getUpdate= getFullTemplate[2];
     setLastUpdate(getUpdate);
     
-    if(template != templateInicialValue) setIsCancelButtonDisabled(false)
-    
   }, [localStorage]);
 
   useEffect(() => {
     
-    let arrayTemplateNameList = Object.keys(localStorage);
-    setTemplateList(arrayTemplateNameList)
-    console.log(arrayTemplateNameList)
+  let arrayTemplateNameList = Object.keys(localStorage);
+    setTemplateList(arrayTemplateNameList);
+    console.log(arrayTemplateNameList);
+
+    if(templateName != '') {
+      setIsSaveButtonDisabled(false);
+    }else {
+      setIsSaveButtonDisabled(true);
+    }
     
-    if(template != templateInicialValue) setIsCancelButtonDisabled(false)
+    if(templateName != '') {
+      setIsCancelButtonDisabled(false);
+    }else {
+      setIsCancelButtonDisabled(true);
+    }
     
-  }, [template]);
+  }, [template, templateName]);
   
   //JODIT EDITOR
   const joditEditor = useRef(null)
   const config = {
     readonly: false,
-    height: 400
+    height: 400,
+    placeholder: 'Digite aqui...'
   };
  
   // TO MAKE THE MERGE FIELDS INPUTS
@@ -177,7 +186,9 @@ const Editor = () => {
         <div>
           <input 
             autoFocus
+            required
             maxLength={40} 
+            minLength={5}
             placeholder='Nome do template..'
             value={templateName}
             onChange={(e) => setTemplateName(e.target.value)}
@@ -185,26 +196,6 @@ const Editor = () => {
         </div>
       </HeaderEditor> 
 
-      {/* <CKEditor id="ckeditor" 
-        editor={ ClassicEditor }
-        data={template}
-        onReady={ editor => {
-          // you can store the "editor" and use when it is needed.
-          console.log( 'editor is ready to use!', editor );
-        } }
-        onChange={ ( event, editor ) => {
-          const data = editor.getData();
-          setTemplate(data)
-          console.log( { event, editor, template } );
-        } }
-        onBlur={ ( event, editor ) => {
-          console.log( 'Blur.', editor );
-        } }
-        onFocus={ ( event, editor ) => {
-          console.log( 'Focus.', editor );
-        } }
-      >
-      </CKEditor> */}
       <JoditEditor 
         ref={joditEditor}
         value={template}
@@ -231,6 +222,7 @@ const Editor = () => {
               type="submit"
               hoverColor={colors.darkGreen}
               text="Salvar Template"
+              disabled={isSaveButtonDisabled}
               onClick={saveTemplateLocalStorage}
             />
           </div>

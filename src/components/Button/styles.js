@@ -22,9 +22,9 @@ export const Btn = styled.button `
   }
   &:disabled {
     background-color: ${({ theme}) => theme.background};
-    color: ${colors.pureGreen};
+    ${'' /* color: ${colors.pureGreen}; */}
     cursor: initial;
     border: 1px solid ${colors.pureGreen};
-    opacity: 0.2;
+    opacity: 0.3;
   }
 `;

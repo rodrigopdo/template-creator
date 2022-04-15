@@ -22,9 +22,14 @@
   - Replace de fields;
   - Close modal form.
 
-[] Generate pdf function (on click 'Gerar PDF' in form modal)
-  - Parse string to render html object;
-  - Open preview pdf.
+[*] Toggle button 'SALVAR TEMPLATE' and 'SALVAR EDIÇÃO';
+
+[*] Set disabled state to "CANCELAR" button;
+
+[} Set last update information date in the template card;
+
+[*] Handle Template name requirement when saving with empty field;
+
 
 
 
