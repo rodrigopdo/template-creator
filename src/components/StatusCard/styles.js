@@ -11,7 +11,7 @@ export const Card = styled.div `
   min-height: 130px;
   flex-direction: column;
   padding: 35px 25px;
-  background-color: ${colors.snow};
+  background-color: ${colors.white};
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 14px;
   border-radius: 5px;
   transition: color .9s ease 0s;
