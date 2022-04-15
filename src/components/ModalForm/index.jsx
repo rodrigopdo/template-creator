@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+ import React, { useState, useEffect, useRef } from 'react';
 import Modal from "react-modal";
 
 //COMPONENTS
@@ -93,14 +93,10 @@ function ModalForm({
             className="react-modal-close"
             text="Fechar"
           >
-            {/* <img src={closeImg} alt="Fechar Modal" /> */}
+           Fechar
           </button>
 
           <form onSubmit={onClick} action="#">
-            {/* <div>
-              <ImageModal className={statusImg} />
-            </div> */}
-
             {fieldsNameList != null ? 
               <>
                 {

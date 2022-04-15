@@ -6,7 +6,6 @@ import Button from '../Button';
 //STYLES
 import colors from '../../styles/colors'
 import { ImageModal, InputSmaller, ModalContainer, ModalContent, TextModal } from './styles';
-// import { ErrorMessage } from '../../pages/Login/styles';
 
 Modal.setAppElement("#root");
 
@@ -81,11 +80,13 @@ function ModalSubmit({
               <ImageModal className={statusImg} />
             </div>
             <TextModal className="textmodal">{status}</TextModal>
-            
-
-            
-
-            
+            <Button
+              type="submit"
+              hoverColor={colors.pureGreen}
+              text="Ok"
+              className="btn-statusmodal"
+              onClick={onRequestClose}
+              />
           </form>
         </ModalContent>
       </Modal>

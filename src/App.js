@@ -1,9 +1,9 @@
-import CKTextBox from './page';
+import Editor from './page';
 
 function App() {
   return (
     <div>
-      <CKTextBox />
+      <Editor />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import jsPDF from 'jspdf';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import useStore from '../stores/useStore';
+import JoditEditor from 'jodit-react';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 //COMPONENTS
 import Button from '../components/Button';
@@ -22,38 +21,50 @@ import {
   EditorFooter
 } from './styles';
 
-const templateInicialValue = "Digite aqui..";
-const CKTextBox = () => {
+
+const Editor = () => {
   
+  const templateInicialValue = "Digite aqui..";
+
   const [template, setTemplate] = useState(templateInicialValue);
   const [isCancelButtonDisabled, setIsCancelButtonDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [statusCards, setStatusCards] = useState([]);
   const [templateName, setTemplateName] = useState('');
-  const [saveTemplate, setSaveTemplate] = useState({});
-  const [storage, setStorage] = useState({});
   const [templateList, setTemplateList] = useState({});
   const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
-  const [typedNameMergeField, setTypedNameMergeField] = useState('');
   const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
-  const [showPageToSave, setShowPageToSave] = useState(false);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
+  
+  useEffect(() => {
+    
+    const getFullTemplate = (JSON.parse(localStorage.getItem(templateName)))
+    const getUpdate= getFullTemplate[2];
+    setLastUpdate(getUpdate);
+    
+    if(template != templateInicialValue) setIsCancelButtonDisabled(false)
+    
+  }, [localStorage]);
 
   useEffect(() => {
-
+    
     let arrayTemplateNameList = Object.keys(localStorage);
     setTemplateList(arrayTemplateNameList)
     console.log(arrayTemplateNameList)
     
     if(template != templateInicialValue) setIsCancelButtonDisabled(false)
-  
+    
   }, [template]);
   
-  const currentDate = new Date().toLocaleDateString();
-  
+  //JODIT EDITOR
+  const joditEditor = useRef(null)
+  const config = {
+    readonly: false,
+    height: 400
+  };
+ 
   // TO MAKE THE MERGE FIELDS INPUTS
   const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
   let mergeFieldsPattern = new RegExp(mergeFieldsRegex);
@@ -75,9 +86,9 @@ const CKTextBox = () => {
     console.log(formattedTemplateListName);
     
   const saveTemplateLocalStorage = () => {
-
+    const currentDate = new Date().toLocaleDateString();
     localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName, currentDate]));
-    
+   
     setIsSubmitModalOpen(true);
   };
   
@@ -137,32 +148,10 @@ const CKTextBox = () => {
   
   console.log(template);
 
-  const generatePdf = (e) => {
-    
-    let doc = parser.parseFromString(htmlString, "text/html");
-    let parser = new DOMParser();
-    const htmlString = template.toString();
-    console.log(doc)
-    // let pdf = new jsPDF();
-    // pdf.text(doc, 10, 10);
-    // pdf.save('a4.pdf');
-    window.print();
-    e.preventDefault();
-  }
-
-  const SavePage = () => {
-    return (
-      <div>
-       
-      </div>
-    )
-  }
-
-
-
-
   return (
     <PageContainer>
+      {!templateList ? <Title>Ainda não há templates salvos.</Title> : <Title>Templates Salvos</Title>}
+
       {templateList.length > 0 ?
           <CardsWrapper
             alignItems="center"
@@ -195,9 +184,8 @@ const CKTextBox = () => {
           />
         </div>
       </HeaderEditor> 
-      <SavePage />
-      
-      <CKEditor id="ckeditor" 
+
+      {/* <CKEditor id="ckeditor" 
         editor={ ClassicEditor }
         data={template}
         onReady={ editor => {
@@ -216,7 +204,14 @@ const CKTextBox = () => {
           console.log( 'Focus.', editor );
         } }
       >
-      </CKEditor>
+      </CKEditor> */}
+      <JoditEditor 
+        ref={joditEditor}
+        value={template}
+        config={config}
+        onBlur={e => setTemplate(e)} 
+        // onChange={}
+      />
       <EditorFooter>
         <p>Exemplo de entrada de texto: <strong>@{'{nome_completo}'}</strong></p>
       </EditorFooter>
@@ -235,7 +230,7 @@ const CKTextBox = () => {
             <Button
               type="submit"
               hoverColor={colors.darkGreen}
-              text="Salvar"
+              text="Salvar Template"
               onClick={saveTemplateLocalStorage}
             />
           </div>
@@ -244,34 +239,34 @@ const CKTextBox = () => {
             <Button
               type="submit"
               hoverColor={colors.darkGreen}
-              text="Gerar PDF"
+              text="Salvar Edição"
               // onClick={saveTemplateLocalStorage}
             />
           </div>
         }
       </BtnContainer>
+      
 
-        <ModalSubmit 
-          isOpen={isSubmitModalOpen}
-          onRequestClose={handleCloseSubmitModal} 
-          sendFile={true} 
-          status={errorModal ? "Ops, erro ao tentar salvar o Template! Por gentileza, tente novamente!" : `Template ${templateName} salvo com sucesso!`} 
-          statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
-          confirmation={true} 
-        />
+      <ModalSubmit 
+        isOpen={isSubmitModalOpen}
+        onRequestClose={handleCloseSubmitModal} 
+        sendFile={true} 
+        status={errorModal ? "Ops, erro ao tentar salvar o Template! Por gentileza, tente novamente!" : `Template ${templateName} salvo com sucesso!`} 
+        statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
+        confirmation={true} 
+      />
 
-        <ModalForm 
-          isOpen={isFormModalOpen}
-          fieldsNameList={inputMergeFieldValue}
-          onRequestClose={() => handleFormModal(false)} 
-          onChange={() => fillPdfMergeFields(templateName)} 
-          onClickModalFillFields={replaceMergeFields}
-          modalTitle={`Campos entrada de texto do ${templateName}`}
-          onClickPdf={generatePdf}
-        />
+      <ModalForm 
+        isOpen={isFormModalOpen}
+        fieldsNameList={inputMergeFieldValue}
+        onRequestClose={() => handleFormModal(false)} 
+        onChange={() => fillPdfMergeFields(templateName)} 
+        onClickModalFillFields={replaceMergeFields}
+        modalTitle={`Campos entrada de texto do ${templateName}`}
+      />
 
     </PageContainer>
   ); 
 }
 
-export default CKTextBox;
+export default Editor;

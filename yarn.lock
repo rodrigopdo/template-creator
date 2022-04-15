@@ -6546,12 +6546,20 @@ jest@^27.4.3:
     import-local "^3.0.2"
     jest-cli "^27.5.1"
 
-jodit-react@^1.2.18:
-  version "1.2.24"
-  resolved "https://registry.npmjs.org/jodit-react/-/jodit-react-1.2.24.tgz"
-  integrity sha512-zDiXQuIrDr9QsH5MkMgktL0o2QNF5TfARJxS4OVGduDXDGPocK+L8P1jhec2BfZP/LwgeD/nEpO40cVVmTEBRA==
+jodit-react@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/jodit-react/-/jodit-react-1.3.1.tgz#00a0a43f62ea5ccc0ecc8906faf2d9400bd0e076"
+  integrity sha512-X6r2xPAzlgNPZ7rxN9TkdXfdAPTlMYUkimq9RHUpM2Mrb1XL6x8VABJE4AvTtETal/Yz1hBFT1doQK4FGxuZgw==
   dependencies:
     jodit "^3.9.4"
+
+jodit@^3.17.1:
+  version "3.17.1"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.17.1.tgz#85198d31c13b3d755532d14ab5dd7f4e0ac756d0"
+  integrity sha512-+id9KQgtGfe1pUpOq0FDUqhdkO+41NC2irbW9O5cLGCPKVsygwaa9+XHZO8AKbF4SQkhprN1V/iQ2V6Lyc7rjQ==
+  dependencies:
+    autobind-decorator "^2.4.0"
+    core-js "^3.21.1"
 
 jodit@^3.9.4:
   version "3.16.3"
