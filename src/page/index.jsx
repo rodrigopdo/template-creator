@@ -22,10 +22,11 @@ import {
   EditorFooter
 } from './styles';
 
+const templateInicialValue = "Digite aqui..";
 const CKTextBox = () => {
   
-  const [template, setTemplate] = useState('Digite aqui..');
-  const [disabled, setDisabled] = useState(true);
+  const [template, setTemplate] = useState(templateInicialValue);
+  const [isCancelButtonDisabled, setIsCancelButtonDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -39,6 +40,7 @@ const CKTextBox = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [showPageToSave, setShowPageToSave] = useState(false);
+  const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
 
   useEffect(() => {
 
@@ -46,8 +48,9 @@ const CKTextBox = () => {
     setTemplateList(arrayTemplateNameList)
     console.log(arrayTemplateNameList)
     
+    if(template != templateInicialValue) setIsCancelButtonDisabled(false)
   
-  }, []);
+  }, [template]);
   
   const currentDate = new Date().toLocaleDateString();
   
@@ -124,15 +127,16 @@ const CKTextBox = () => {
     
     arrayOfInputValue.map((item) => {
       templateReplaced = templateReplaced.replace(/[@][{][\w.]+[}]/, item)
-        setTemplate(templateReplaced)
-      });
+      setTemplate(templateReplaced)
+    });
       
     e.preventDefault();
-    setIsFormModalOpen(false)
+    setIsFormModalOpen(false);
+    setIsSaveButtonShow(false);
   }
   
   console.log(template);
-  
+
   const generatePdf = (e) => {
     
     let doc = parser.parseFromString(htmlString, "text/html");
@@ -222,16 +226,29 @@ const CKTextBox = () => {
             bgColor="transparent"
             text="Cancelar"
             color={colors.pureGreen}
+            disabled={isCancelButtonDisabled}
+            onClick={() => window.location.reload()}
             />
         </div>
-        <div>
-          <Button
-            type="submit"
-            hoverColor={colors.darkGreen}
-            text="Salvar"
-            onClick={saveTemplateLocalStorage}
-          />
-        </div>
+        {isSaveButtonShow ?
+          <div>
+            <Button
+              type="submit"
+              hoverColor={colors.darkGreen}
+              text="Salvar"
+              onClick={saveTemplateLocalStorage}
+            />
+          </div>
+        :
+          <div>
+            <Button
+              type="submit"
+              hoverColor={colors.darkGreen}
+              text="Gerar PDF"
+              // onClick={saveTemplateLocalStorage}
+            />
+          </div>
+        }
       </BtnContainer>
 
         <ModalSubmit 

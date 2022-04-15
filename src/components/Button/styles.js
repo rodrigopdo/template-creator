@@ -18,11 +18,13 @@ export const Btn = styled.button `
 
   &:hover {
     background-color: ${(props) => props.hoverColor || 'transparent'};
-    border: ${(props) => props.hoverBorder || '2px solid' + colors.pureGreen}
+    border: ${(props) => props.hoverBorder || '1px solid' + colors.pureGreen}
   }
   &:disabled {
     background-color: ${({ theme}) => theme.background};
-    color: ${colors.cleanGreen2};
+    color: ${colors.pureGreen};
     cursor: initial;
+    border: 1px solid ${colors.pureGreen};
+    opacity: 0.2;
   }
 `;

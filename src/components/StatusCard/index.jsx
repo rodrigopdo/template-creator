@@ -1,7 +1,6 @@
 import React from 'react'
-// import { Link } from 'react-router-dom';
-import Image from '../../assets/img/ellipsis-vertical-solid.svg';
 import { Card } from './styles';
+import Image from '../../assets/menu_3_dots.svg';
 
 const StatusCard = props => {
   return (

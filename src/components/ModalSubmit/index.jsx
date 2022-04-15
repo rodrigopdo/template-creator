@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import Modal from "react-modal";
 
-//ASSETS
-import Eye from '../../assets/img/Eye_Icon.png';
-import EyeClose from '../../assets/img/Eye_Close_Icon.png';
-import closeImg from "../../assets/img/close.svg";
 //COMPONENTS
 import Button from '../Button';
 //STYLES
@@ -76,68 +72,20 @@ function ModalSubmit({
             type="button"
             onClick={onRequestClose}
             className="react-modal-close"
+            text="Fechar"
           >
-            <img src={closeImg} alt="Fechar Modal" />
+            {/* <img src={closeImg} alt="Fechar Modal" /> */}
           </button>
           <form onSubmit={onClick} action="#">
             <div>
               <ImageModal className={statusImg} />
             </div>
             <TextModal className="textmodal">{status}</TextModal>
-            {forgotPassword &&
-              <>
-                <InputSmaller>
-                  <i class="fas fa-envelope"></i>
-                  <input type="email" name="email" placeholder="E-mail" autoFocus required />
-                </InputSmaller>
+            
 
-                {/* <ErrorMessage className="error-msg" color={error ? colors.alertRed : colors.darkGreen}>{msg}</ErrorMessage> */}
+            
 
-                <Button
-                  type="submit"
-                  hoverColor={colors.pureGreen}
-                  text="Enviar"
-                  className="btn-modal"
-                />
-              </>
-
-            }
-
-            {resetPassword && (
-              <>
-                <InputSmaller>
-                  <i className="fas fa-lock"></i>
-                  <input
-                    required
-                    type={passwordShown ? "text" : "password"}
-                    name="password"
-                    placeholder="Senha"
-                  />
-                  <img className="eye-toggle" src={visible ? Eye : EyeClose} alt="password toggle" onClick={togglePassword} />
-                </InputSmaller>
-
-                {/* <ErrorMessage className="error-msg" color={error ? colors.alertRed : colors.darkGreen}>{msg}</ErrorMessage> */}
-
-                <Button
-                  type="submit"
-                  hoverColor={colors.pureGreen}
-                  text="Alterar"
-                  className="btn-modal"
-                />
-              </>
-            )
-            }
-
-            {confirmation && (
-              <Button
-                type="submit"
-                hoverColor={colors.pureGreen}
-                text="Ok"
-                className="btn-statusmodal"
-                onClick={onRequestClose}
-              />
-            )
-            }
+            
           </form>
         </ModalContent>
       </Modal>

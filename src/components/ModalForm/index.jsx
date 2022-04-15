@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from "react-modal";
 
-//ASSETS
-import Eye from '../../assets/img/Eye_Icon.png';
-import EyeClose from '../../assets/img/Eye_Close_Icon.png';
-import closeImg from "../../assets/img/close.svg";
 //COMPONENTS
 import Button from '../Button';
 //STYLES
@@ -95,8 +91,9 @@ function ModalForm({
             type="button"
             onClick={onRequestClose}
             className="react-modal-close"
+            text="Fechar"
           >
-            <img src={closeImg} alt="Fechar Modal" />
+            {/* <img src={closeImg} alt="Fechar Modal" /> */}
           </button>
 
           <form onSubmit={onClick} action="#">
