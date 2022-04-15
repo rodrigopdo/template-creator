@@ -18,7 +18,8 @@ import {
   PageContainer, 
   Title,
   CardsWrapper,
-  HeaderEditor
+  HeaderEditor,
+  EditorFooter
 } from './styles';
 
 const CKTextBox = () => {
@@ -38,55 +39,15 @@ const CKTextBox = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [showPageToSave, setShowPageToSave] = useState(false);
-  // const [currentTemplate, setTemplate] = useState('');
-
-  // const inputModalEl = useRef('dfdfd');
-  // console.log(inputModalEl.current)
-
-  // const inputValue = inputModalEl.current;
-  // console.log(inputValue)
 
   useEffect(() => {
 
     let arrayTemplateNameList = Object.keys(localStorage);
     setTemplateList(arrayTemplateNameList)
     console.log(arrayTemplateNameList)
-    console.log(localStorage)  
-    // const getFullTemplate = (JSON.parse(localStorage.getItem('CPR Vigor')))
-    // const getItemtwo = getFullTemplate[1];
-    // console.log(getItemtwo)
-    const storedTime = localStorage.getItem('currentTime');
-    if(!storedTime) localStorage.setItem('currentTime', new Date().toLocaleDateString());
-    setLastUpdate(localStorage.getItem('currentTime'));
-
-
-    const items = { ...localStorage };
-    console.log(items)
+    
   
   }, []);
-
-  //HOOK TO FILL MERGE FIELDS IN PDF
-  // useEffect(() => {
-    
-  //   const getTemplateData = () => {
-  //     const templateData = (JSON.parse(localStorage.getItem(templateName)))     
-  //     const getTemplateString = templateData[0];
-  //     console.log(getTemplateString)
-  //     getTemplateString.replace()
-  //   } 
-
-  // }, []);
-
-  //  useEffect(() => {
-  //   inputModalEl.current = typedNameMergeField;
-  // }, [typedNameMergeField]);
-  
-  
-
-  // const getInputValue = (e) => {
-  //   const typedValue = e.inputModalEl.current.value;
-  //   setTypedNameMergeField(typedValue);
-  // }
   
   const currentDate = new Date().toLocaleDateString();
   
@@ -155,6 +116,7 @@ const CKTextBox = () => {
       }
     }
   }
+  console.log(arrayOfInputValue);
   
   const replaceMergeFields = (e) => {
     
@@ -167,7 +129,6 @@ const CKTextBox = () => {
       });
       
       // console.log(templateReplaced);
-      // console.log(arrayOfInputValue);
       // console.log(newArrayOfValue);
     
     e.preventDefault();
@@ -233,9 +194,6 @@ const CKTextBox = () => {
             onChange={(e) => setTemplateName(e.target.value)}
           />
         </div>
-        <div>
-          <p>Exemplo modelo de campo de entrada de texto: <strong>@{'{nome_completo}'}</strong></p>
-        </div>
       </HeaderEditor> 
       <SavePage />
       
@@ -259,6 +217,9 @@ const CKTextBox = () => {
         } }
       >
       </CKEditor>
+      <EditorFooter>
+        <p>Exemplo de entrada de texto: <strong>@{'{nome_completo}'}</strong></p>
+      </EditorFooter>
       <BtnContainer>
         <div>
           <Button

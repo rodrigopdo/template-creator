@@ -36,20 +36,23 @@ export const HeaderEditor = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 10px 10px 15px;
+  width: 100%;
   input {
     color: ${colors.gray1};
     font-size: 1.2rem;
     font-weight: 600;
-    border-bottom: 1px solid ${colors.gray6};
+    width: 400px;
     &::placeholder {
       color: ${colors.gray4};
       font-size: 0.9rem;
     }
   }
-  p {
-    color: ${colors.gray4};
-    font-size: 0.8rem;
-  }
+`;
+
+export const EditorFooter = styled.div`
+  color: ${colors.gray4};
+  font-size: 0.8rem;
+  margin: 10px auto 20px 0;
 `;
 
 

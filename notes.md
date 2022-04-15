@@ -1,50 +1,30 @@
-## Steps
-
 ### The merge fields will be created by the user typing the name of the field between @{ }.
 
-* Create a input Template Name and saving as key into Local Storage
+[*] Create a input Template Name and saving as key into Local Storage
 
-* Save the editor string as value into Local Storage
+[*] Save the editor string as value into Local Storage
 
-* Retrieve template name and current date to fill the template card rendered above de editor
+[*] Retrieve template name and current date to fill the template card rendered above de editor
 
-j{j* Search the pattern "@{merge_field}" in the editor string and create an array with 'clean' items, without special chars, ex.: ['NOME COMPLETO', 'ENDERECO']
+[*] Search the pattern "@{merge_field}" in the editor string and create an array with 'clean' items, without special chars and uppercase, ex.: from ['@{nome_completo}', '@{endereco_completo}'] to ['NOME COMPLETO', 'ENDERECO'].
 
-* This field's name must create input with same label's name, replacing _ to ' ' and capitalize string. Ex.: nome_completo / Nome Completo
+[*] The array name list name must create input with same label's name to render in the form modal. 
 
-* Save function (onclick 'Salvar')
+[*] Save function (onclick 'Salvar')
   - Save template name and edition on LocalStorage;
   - create inputs form from merge fields;
   - create a new template card with name and last update above editor;
-  - open modal submit;
+  - open modal submit.
 
-* Show modal submit feedback, the btn inside modal clean editor and template name input.
+[*] In the modal submit feedback, the btn inside modal clean editor and template name input.
 
-* Create pdf function (click on template card)
-  - Open a form modal (to fill the merge fields created)
+[*] Replace merge fields function (onclick 'Preencher campos')
+  - Replace de fields;
+  - Close modal form.
 
-* Generate pdf function (on click 'Gerar PDF' in form modal)
-  - Replace the merge fields into editor string;
-  - active the lib to generate pdf;
-
-
-  ### NEXTS COMMITS 
-
-  [*] Create the form modal and rules to render inputs mapping from the template names array.
-
-  [*] Store an array with: template name, [template content, list of merge fields].
-
-  [*] Set the click on card event to get the respectives inputs.
-
-  [*] Save the input values into an array onChange value.
-
-  [] Install lib to generate PDF.
-
-  [] Get the input values to replace the pattern '@{merge_field} with those values,
-    - generate the pdf  
-
-  [] Setup the update date to be fixed creation/last edition.
-
+[] Generate pdf function (on click 'Gerar PDF' in form modal)
+  - Parse string to render html object;
+  - Open preview pdf.
 
 
 
