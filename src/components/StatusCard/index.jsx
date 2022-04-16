@@ -1,21 +1,32 @@
-import React from 'react'
-import { Card } from './styles';
+import React from 'react';
+
+import Dropdown from '../Dropdown';
+
 import Image from '../../assets/menu_3_dots.svg';
 
+import { 
+  Card,
+  MainCardSection,
+  MenuContainer
+} from './styles';
+
 const StatusCard = props => {
+
   return (
-    <Card onClick={props.onclick}>
-      <div>
-        <h4>{props.title}</h4>
-        <h5>{props.update}</h5>
-      </div>
-      <div>
-        <h4>{props.count2}</h4>
-        <h5>{props.title2}</h5>
-      </div>
-      <div>
-        <img src={Image} alt="Fechar Modal" />
-      </div>
+    <Card >
+      <MenuContainer>
+        <Dropdown image={Image} />
+      </MenuContainer>
+      <MainCardSection onClick={props.onclick}>
+        <div>
+          <h4>{props.title}</h4>
+        </div>
+        <div>
+          <h5>{props.update}</h5>
+        </div>
+      </MainCardSection>
+     
+      
     </Card>
   )
 }

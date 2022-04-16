@@ -31,7 +31,11 @@
 [*] Handle Template name requirement when saving with empty field;
 
 [] Handle Modal Form function (onclick on a Card)
-  - 
+   
+[] Include menu dropdown in the cards, with the 'edit' and 'remove'.
+
+[] Include tooltip on hover the card menu (3 dots).
+
 
 
 

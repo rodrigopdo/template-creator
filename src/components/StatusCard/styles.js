@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 
 export const Card = styled.div `
-  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-width: 190px;
   max-width: 380px;
   height: 150px;
   min-height: 130px;
-  flex-direction: column;
-  padding: 35px 25px;
+  padding: 5px 5px;
   background-color: ${colors.white};
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 14px;
   border-radius: 5px;
@@ -18,81 +18,40 @@ export const Card = styled.div `
   margin: 10px 10px 30px 10px;
   border-right: 2px solid ${colors.cleanGreen2};
   cursor: pointer;
+  text-align: end;
   &:hover {
-    transform: scale(1.01);
     box-shadow: rgba(149, 157, 165, 0.05) 10px 8px 18px;
   }
+`;
   
-  div:nth-child(1) {
-    margin: 5px 0 20px auto;
-    text-align: end;
-    h4 {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      left: auto;
-      max-width: 80%;
-      font-size: 0.8rem;
-      color: ${colors.gray3};
-      opacity: 0.8;
-      @media(max-width: 870px) {
-        font-size: 0.7rem;
-      }
-    }
-    h5 {
-      position: absolute;
-      max-width: 170px;
-      text-align: end;
-      top: 65px;
-      right: 20px;
+export const MainCardSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 auto;
+  padding: 0 10px;
+  justify-content: flex-end;3
+  max-height: 90%;
+
+  h4 {
+    margin: 0 0 30px auto;
+    font-size: 0.8rem;
+    color: ${colors.gray3};
+    opacity: 0.8;
+    @media(max-width: 870px) {
       font-size: 0.7rem;
-      font-weight: 500;
-      color: ${colors.gray3};
-    }
-  }
-
-  div:nth-child(2) {
- 
-    h4 {
-      position: absolute;
-      top: 80px;
-      right: 20px;
-      font-size: 1.2rem;
-      color: ${({ theme }) => theme.cardTitle};
-      opacity: 0.8;
-      @media(max-width: 870px) {
-        font-size: 0.rem;
       }
     }
-    h5 {
-      position: absolute;
-      max-width: 155px;
-      text-align: end;
-      top: 110px;
-      right: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: ${({ theme }) => theme.cardSubTitle};
-    }
+  h5 {
+    margin: 0 0 30px auto;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: ${colors.gray3};
   }
-  p {
-    position: absolute;
-    top: 105px;
-    right: 20px;
-    font-size: 0.6rem;
-    color:${({ theme }) => theme.cardLinkText};
-  }
+`;  
 
-  div:nth-child(3) {
-    position: absolute;
-      top: 110px;
-      right: 20px;
-    img {
-    height: 15px;
-    color: ${colors.alertRed};
-  }
-
-  }
-  
+export const MenuContainer = styled.div`
+  width: 30px;
+  heigth: 30px;
+  margin: 0 auto 0 0;
 `;
 
