@@ -1,6 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import JoditEditor from 'jodit-react';
-// import { addDoc, collection } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { 
+  getFirestore, 
+  collection, 
+  query, 
+  getDoc, 
+  addDoc, 
+  getDocs, 
+  doc, 
+  setDoc, 
+  updateDoc 
+} from 'firebase/firestore';
 
 //COMPONENTS
 import Button from '../components/Button';
@@ -20,10 +31,9 @@ import {
   EditorFooter
 } from './styles';
 
+//ASSETS
 import ModalImage from '../assets/no_template.svg';
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 
 const firebaseApp = initializeApp( {
   apiKey: "AIzaSyBtdRCyl5-8apWsegyT73P1lXaN5Bzb4GA",
@@ -36,21 +46,6 @@ const firebaseApp = initializeApp( {
 
 const database = getFirestore()
 
-const specialOfTheDay = doc(database, 'dailySpecial/2021-09-14');
-function writeDailySpecial() {
-  const docData = {
-    description: 'A delicious vanilla latte',
-    price: 3.99,
-    milk: 'Whofddddddf',
-    vegan: false,
-  };
-  // setDoc(specialOfTheDay, docData, {merge: false});
-  setDoc(specialOfTheDay, docData);
-}
-
-writeDailySpecial();
-
-
 const Editor = () => {
   
   const [template, setTemplate] = useState('');
@@ -62,27 +57,37 @@ const Editor = () => {
   const [templateName, setTemplateName] = useState('');
   const [templateList, setTemplateList] = useState({});
   const [inputMergeFieldValue, setInputMergeFieldValue] = useState();
-  const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
+  const [isSaveEditionModalOpen, setIsSaveEditionModalOpen] = useState(false);
+  const [documentName, setDocumentName] = useState('Documento sem nome');
+  
+  async function getMergefieldNames() {
+    const newArrayNameList = [];
+    const q = query(collection(database, "templates"));
+    
+    const querySnapshot = await getDocs(q);
 
+    querySnapshot.forEach((doc) => {
+      newArrayNameList.push(doc.id);
+      console.log(doc.id, " => ", doc.data());
+      console.log(querySnapshot.content);
+    });
+    console.log(newArrayNameList);
+    setTemplateList(newArrayNameList);
+  }
+
+  useEffect(() => {
+    getMergefieldNames();
+
+  }, [])
   
   useEffect(() => {
-   
-    //FIREBASE
-    const getFullTemplate = (JSON.parse(localStorage.getItem(templateName)))
-    const getUpdate= getFullTemplate[2];
-    setLastUpdate(getUpdate);
     
-  }, [localStorage]);
-
-  console.log(localStorage);
-
-  useEffect(() => {
-    
-    let arrayTemplateNameList = Object.keys(localStorage);
-    setTemplateList(arrayTemplateNameList);
-    console.log(arrayTemplateNameList);
+    // let arrayTemplateNameList = Object.keys(localStorage);
+    // setTemplateList(arrayTemplateNameList);
+    // console.log(localStorage);
+    // console.log(arrayTemplateNameList);
 
     if(templateName != '') {
       setIsSaveButtonDisabled(false);
@@ -96,12 +101,12 @@ const Editor = () => {
       setIsCancelButtonDisabled(true);
     }
     
-  }, [template, templateName]);
+  }, [templateName]);
   
   const joditEditor = useRef(null)
   const config = {
     readonly: false,
-    height: 400,
+    height: 600,
     placeholder: 'Digite aqui...'
   };
  
@@ -117,41 +122,66 @@ const Editor = () => {
     ) : null;
     
     let upperCaseList = onlyNamesList ? onlyNamesList.map(item => item.toUpperCase()) : null;
-    let formattedTemplateListName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
+    let mergeFieldsListName =  upperCaseList ? upperCaseList.map(item => item.replace(/_/g, ' ')) : null;
 
     console.log(mergeFieldsList);
     console.log(onlyNamesList);
     console.log(upperCaseList);
-    console.log(formattedTemplateListName);
+    console.log(mergeFieldsListName);
     
-  //FIREBASE
-  const saveTemplateLocalStorage = () => {
-    const currentDate = new Date().toLocaleDateString();
-    localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName, currentDate]));
-   
+  const saveTemplate = () => {
+
+    const editedDocument = doc(database, `templates/${templateName}`);
+    
+    function writeDocument() {
+      const docData = {
+        documentName: templateName,
+        content: template,
+        mergeFieldList: mergeFieldsListName,
+      };
+      setDoc(editedDocument, docData);
+    }
+    writeDocument();
     setIsSubmitModalOpen(true);
+
+    // localStorage.setItem(templateName, JSON.stringify([template, mergeFieldsListName]));
+   
   };
   
   const handleCloseSubmitModal = () => {
     setIsSubmitModalOpen(false);
-    setTemplate('Digite aqui..');
-    setTemplateName('');
+    window.location.reload()
+  };
+
+  const handleCloseSaveEditionModal = () => {
+    setIsSaveEditionModalOpen(false);
     window.location.reload()
   };
 
   //FIREBASE
-  const handleFormModal = (status, templateStorageKey) => {
-    setIsFormModalOpen(status);
+  const handleFormModal = async (status, templateStorageKey) => {
+    
+    // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
+    // const getArrayOfMergeFieldNames = getFullTemplate[1];
+    // const getCurrentTemplateString = getFullTemplate[0];
 
-    const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
-    const getArrayOfMergeFieldNames = getFullTemplate[1];
-    const getCurrentTemplateString = getFullTemplate[0];
-    setInputMergeFieldValue(getArrayOfMergeFieldNames)
-    setTemplate(getCurrentTemplateString.toString()); 
-    setTemplateName(templateStorageKey);
-
+    //FIREBASE GET DATA
+    const docRef = doc(database, "templates", templateStorageKey);
+    const docSnap = await getDoc(docRef);
+    const getFullTemplate = docSnap.data();
+    const getArrayOfMergeFieldNames = getFullTemplate.mergeFieldList;
+    const getCurrentTemplateString = getFullTemplate.content;
+  
+    console.log(docSnap);
+    console.log(getFullTemplate);
     console.log(getArrayOfMergeFieldNames);
     console.log(getCurrentTemplateString);
+   
+    setInputMergeFieldValue(getArrayOfMergeFieldNames)
+    setTemplate(getCurrentTemplateString); 
+    setTemplateName(templateStorageKey);
+    
+    setIsFormModalOpen(status);
   };
   
   const fillMergeFields = () => {
@@ -213,6 +243,20 @@ const Editor = () => {
     }
   };
 
+  const saveDocumentEdition = () => {
+    const editedDocument = doc(database, `editedDocuments/${documentName}`);
+    function writeDailySpecial() {
+      const docData = {
+        documentName: templateName,
+        content: template,
+      };
+      // setDoc(editedDocument, docData, {merge: false});
+      setDoc(editedDocument, docData);
+    }
+    writeDailySpecial();
+    setIsSaveEditionModalOpen(true);
+  };
+
   return (
     <PageContainer>
       {!templateList ? 
@@ -233,7 +277,7 @@ const Editor = () => {
                   onClick={() => handleFormModal(true, item)}
                   onClickMenu={(e) => editOrRemoveTemplate(e, item, index)}
                   title={item}
-                  update={`Modificado: ${lastUpdate}`}
+                  update={`Modificado: ${'12/11/2021'}`} //SET CURRENT DATE
                   id={index}
                 />
               </Col>
@@ -286,7 +330,7 @@ const Editor = () => {
               hoverColor={colors.darkGreen}
               text="Salvar Template"
               disabled={isSaveButtonDisabled}
-              onClick={saveTemplateLocalStorage}
+              onClick={saveTemplate}
             />
           </div>
           :
@@ -295,7 +339,7 @@ const Editor = () => {
               type="submit"
               hoverColor={colors.darkGreen}
               text="Salvar Documento"
-              onClick={() => alert('Salvo no Firebase...')}
+              onClick={saveDocumentEdition}
             />
           </div>
         }
@@ -310,13 +354,19 @@ const Editor = () => {
         statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
         confirmation={true} 
       />
+      <ModalSubmit 
+        isOpen={isSaveEditionModalOpen}
+        onRequestClose={handleCloseSaveEditionModal} 
+        status={errorModal ? "Ops, erro ao tentar salvar o documento! Por gentileza, tente novamente!" : `Documento ${templateName} salvo com sucesso!`} 
+        statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
+      />
 
       <ModalForm 
         isOpen={isFormModalOpen}
         modalTitle={inputMergeFieldValue ? templateName : ""}
         image={ModalImage}
         fieldsNameList={inputMergeFieldValue}
-        onRequestClose={() => handleFormModal(false)} 
+        onRequestClose={() => setIsFormModalOpen(false)} 
         onChange={fillMergeFields} 
         onClickModalFillFields={replaceMergeFields}
       />

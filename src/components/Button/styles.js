@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 
 export const Btn = styled.button `
-  ${'' /* width: ${(props) => props.width || '180px'}; */}
-  padding: ${(props) => props.padding || '20px 25px'};
-  max-width: ${(props) => props.maxWidth || '480px'};
+  width: ${(props) => props.width || '180px'};
+  ${'' /* padding: ${(props) => props.padding || '15px 15px'}; */}
+  mix-width: ${(props) => props.maxWidth || '480px'};
   background-color: ${props => props.bgColor || colors.pureGreen};
-  ${'' /* height: ${(props) => props.height || '40px'}; */}
+  height: ${(props) => props.height || '40px'};
   border-radius: 50px;
   border: ${(props) => props.border ? '2px solid' + colors.white : '1px solid' + colors.pureGreen};
   outline: none;

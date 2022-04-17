@@ -46,6 +46,10 @@
 
 [] Save changes function, update localstorage.
 
+[] Set up Firebase Firestore to save TEMPLATES and EDITED DOCUMENTS.
+
 [] Draw 2 new illustration (changes saved and remove template confirmation)
+
+[] Handle special char in merge field (ú, á, ê, etc...).
 
 
