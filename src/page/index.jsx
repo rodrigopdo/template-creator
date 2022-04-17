@@ -10,6 +10,7 @@ import {
   getDocs, 
   doc, 
   setDoc, 
+  deleteDoc,
   updateDoc 
 } from 'firebase/firestore';
 
@@ -18,6 +19,7 @@ import Button from '../components/Button';
 import ModalSubmit from '../components/ModalSubmit';
 import ModalForm from '../components/ModalForm';
 import StatusCard from '../components/StatusCard';
+import ModalSaveDocument from '../components/ModalSaveDocument';
 
 //STYLES
 import colors from '../styles/colors';
@@ -60,6 +62,7 @@ const Editor = () => {
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
   const [isSaveEditionModalOpen, setIsSaveEditionModalOpen] = useState(false);
+  const [isSaveDocumentModalOpen, setIsSaveDocumentModalOpen] = useState(false);
   const [documentName, setDocumentName] = useState('Documento sem nome');
   
   async function getMergefieldNames() {
@@ -139,7 +142,7 @@ const Editor = () => {
         content: template,
         mergeFieldList: mergeFieldsListName,
       };
-      setDoc(editedDocument, docData);
+      setDoc(editedDocument, docData, { merge: true});
     }
     writeDocument();
     setIsSubmitModalOpen(true);
@@ -156,6 +159,10 @@ const Editor = () => {
   const handleCloseSaveEditionModal = () => {
     setIsSaveEditionModalOpen(false);
     window.location.reload()
+  };
+
+  const handleSaveDocumentModal = (status) => {
+    setIsSaveDocumentModalOpen(status);
   };
 
   //FIREBASE
@@ -217,15 +224,23 @@ const Editor = () => {
   console.log(template);
 
   //FIREBASE
-  const editOrRemoveTemplate = (e, templateStorageKey, id) => {
+  const editOrRemoveTemplate = async (e, templateStorageKey, id) => {
 
     const elementName = e.target.name; 
 
     switch (elementName) {
       case 'edit':
-        const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
-        const getArrayOfMergeFieldNames = getFullTemplate[1];
-        const getCurrentTemplateString = getFullTemplate[0];
+
+        const docRef = doc(database, "templates", templateStorageKey);
+        const docSnap = await getDoc(docRef);
+        const getFullTemplate = docSnap.data();
+        const getArrayOfMergeFieldNames = getFullTemplate.mergeFieldList;
+        const getCurrentTemplateString = getFullTemplate.content;
+
+        // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
+        // const getArrayOfMergeFieldNames = getFullTemplate[1];
+        // const getCurrentTemplateString = getFullTemplate[0];
+
         setInputMergeFieldValue(getArrayOfMergeFieldNames)
         setTemplate(getCurrentTemplateString.toString()); 
         setTemplateName(templateStorageKey);
@@ -235,8 +250,13 @@ const Editor = () => {
         window.scrollBy(0,10000);
         break;
       case 'remove':
-        localStorage.removeItem(templateStorageKey)
+
+
+        await deleteDoc(doc(database, "templates", templateStorageKey));
         window.location.reload()
+
+        // localStorage.removeItem(templateStorageKey)
+
         break;
       default:
         console.log('Menu item not found!');
@@ -255,6 +275,7 @@ const Editor = () => {
     }
     writeDailySpecial();
     setIsSaveEditionModalOpen(true);
+    window.location.reload()
   };
 
   return (
@@ -339,7 +360,7 @@ const Editor = () => {
               type="submit"
               hoverColor={colors.darkGreen}
               text="Salvar Documento"
-              onClick={saveDocumentEdition}
+              onClick={() => handleSaveDocumentModal(true)}
             />
           </div>
         }
@@ -360,7 +381,6 @@ const Editor = () => {
         status={errorModal ? "Ops, erro ao tentar salvar o documento! Por gentileza, tente novamente!" : `Documento ${templateName} salvo com sucesso!`} 
         statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
       />
-
       <ModalForm 
         isOpen={isFormModalOpen}
         modalTitle={inputMergeFieldValue ? templateName : ""}
@@ -369,6 +389,12 @@ const Editor = () => {
         onRequestClose={() => setIsFormModalOpen(false)} 
         onChange={fillMergeFields} 
         onClickModalFillFields={replaceMergeFields}
+      />
+      <ModalSaveDocument 
+        isOpen={isSaveDocumentModalOpen}
+        onRequestClose={saveDocumentEdition} 
+        status={errorModal ? "Ops, erro ao tentar salvar o documento! Por gentileza, tente novamente!" : `Documento ${templateName} salvo com sucesso!`} 
+        statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
       />
 
     </PageContainer>
