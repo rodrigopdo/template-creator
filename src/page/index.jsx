@@ -308,8 +308,11 @@ const Editor = () => {
         : 
         <></>
       }
+      {isSaveButtonShow ?
       <Title>Criar novo Template</Title>
-
+      :
+      <Title>Salvar Documento</Title>
+      }
       <HeaderEditor>
         <div>
           <input 
