@@ -9,6 +9,7 @@ const Button = props => {
         bgColor={props.bgColor}
         color={props.color}
         width={props.width}
+        maxWidth={props.maxWidth}
         hoverColor={props.hoverColor}
         margin={props.margin}
         hoverBorder={props.hoverBorder}
@@ -16,6 +17,7 @@ const Button = props => {
         border={props.border}
         className={props.className}
         disabled={props.disabled}
+        padding={props.padding}
       >
         {props.text}
       </Btn>

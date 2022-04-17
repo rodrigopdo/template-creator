@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import JoditEditor from 'jodit-react';
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { addDoc, collection } from 'firebase/firestore';
 
 //COMPONENTS
 import Button from '../components/Button';
@@ -23,6 +22,35 @@ import {
 
 import ModalImage from '../assets/no_template.svg';
 
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
+
+const firebaseApp = initializeApp( {
+  apiKey: "AIzaSyBtdRCyl5-8apWsegyT73P1lXaN5Bzb4GA",
+  authDomain: "template-poc-36ee9.firebaseapp.com",
+  projectId: "template-poc-36ee9",
+  storageBucket: "template-poc-36ee9.appspot.com",
+  messagingSenderId: "200222506514",
+  appId: "1:200222506514:web:4f162934018bed4503e2cb"
+});
+
+const database = getFirestore()
+
+const specialOfTheDay = doc(database, 'dailySpecial/2021-09-14');
+function writeDailySpecial() {
+  const docData = {
+    description: 'A delicious vanilla latte',
+    price: 3.99,
+    milk: 'Whofddddddf',
+    vegan: false,
+  };
+  // setDoc(specialOfTheDay, docData, {merge: false});
+  setDoc(specialOfTheDay, docData);
+}
+
+writeDailySpecial();
+
+
 const Editor = () => {
   
   const [template, setTemplate] = useState('');
@@ -37,10 +65,11 @@ const Editor = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
+
   
-  //UPDATE CHANGES
   useEffect(() => {
-    
+   
+    //FIREBASE
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateName)))
     const getUpdate= getFullTemplate[2];
     setLastUpdate(getUpdate);
@@ -51,7 +80,7 @@ const Editor = () => {
 
   useEffect(() => {
     
-  let arrayTemplateNameList = Object.keys(localStorage);
+    let arrayTemplateNameList = Object.keys(localStorage);
     setTemplateList(arrayTemplateNameList);
     console.log(arrayTemplateNameList);
 
@@ -69,7 +98,6 @@ const Editor = () => {
     
   }, [template, templateName]);
   
-  //JODIT EDITOR
   const joditEditor = useRef(null)
   const config = {
     readonly: false,
@@ -77,7 +105,6 @@ const Editor = () => {
     placeholder: 'Digite aqui...'
   };
  
-  // TO MAKE THE MERGE FIELDS INPUTS
   const mergeFieldsRegex= /[@][{][\w.]+[}]/g;
   let mergeFieldsPattern = new RegExp(mergeFieldsRegex);
   let mergeFieldsList = template.match(mergeFieldsPattern)
@@ -97,6 +124,7 @@ const Editor = () => {
     console.log(upperCaseList);
     console.log(formattedTemplateListName);
     
+  //FIREBASE
   const saveTemplateLocalStorage = () => {
     const currentDate = new Date().toLocaleDateString();
     localStorage.setItem(templateName, JSON.stringify([template, formattedTemplateListName, currentDate]));
@@ -104,18 +132,15 @@ const Editor = () => {
     setIsSubmitModalOpen(true);
   };
   
-  //OK BUTTON INSIDE MODAL SUBMIT
   const handleCloseSubmitModal = () => {
-    
     setIsSubmitModalOpen(false);
     setTemplate('Digite aqui..');
     setTemplateName('');
     window.location.reload()
   };
 
-  //TOGGLE FORM MODAL
+  //FIREBASE
   const handleFormModal = (status, templateStorageKey) => {
-
     setIsFormModalOpen(status);
 
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
@@ -127,11 +152,11 @@ const Editor = () => {
 
     console.log(getArrayOfMergeFieldNames);
     console.log(getCurrentTemplateString);
-  }
-  let inputValueArray = [];
-
-  const fillPdfMergeFields = () => {
+  };
+  
+  const fillMergeFields = () => {
     
+    let inputValueArray = [];
     let inputEl;
     
     for(let i = 0; i <= inputValueArray.length; i++) {
@@ -143,7 +168,7 @@ const Editor = () => {
       }
     }
   }
-  // console.log(arrayOfInputValue);
+  console.log(arrayOfInputValue);
   
   const replaceMergeFields = (e) => {
     
@@ -159,9 +184,9 @@ const Editor = () => {
     e.preventDefault();
     window.scrollBy(0, 10000);
   }
-  
   console.log(template);
 
+  //FIREBASE
   const editOrRemoveTemplate = (e, templateStorageKey, id) => {
 
     const elementName = e.target.name; 
@@ -178,7 +203,6 @@ const Editor = () => {
         const elementId = document.getElementById(id);
         elementId.classList.remove('active');
         window.scrollBy(0,10000);
-
         break;
       case 'remove':
         localStorage.removeItem(templateStorageKey)
@@ -270,8 +294,8 @@ const Editor = () => {
             <Button
               type="submit"
               hoverColor={colors.darkGreen}
-              text="Salvar Edição"
-              // onClick={saveTemplateLocalStorage}
+              text="Salvar Documento"
+              onClick={() => alert('Salvo no Firebase...')}
             />
           </div>
         }
@@ -293,7 +317,7 @@ const Editor = () => {
         image={ModalImage}
         fieldsNameList={inputMergeFieldValue}
         onRequestClose={() => handleFormModal(false)} 
-        onChange={() => fillPdfMergeFields(templateName)} 
+        onChange={fillMergeFields} 
         onClickModalFillFields={replaceMergeFields}
       />
 
