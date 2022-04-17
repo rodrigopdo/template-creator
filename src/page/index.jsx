@@ -21,6 +21,7 @@ import {
   EditorFooter
 } from './styles';
 
+import ModalImage from '../assets/no_template.svg';
 
 const Editor = () => {
   
@@ -118,7 +119,7 @@ const Editor = () => {
     setIsFormModalOpen(status);
 
     const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
-    const getArrayOfMergeFieldNames= getFullTemplate[1];
+    const getArrayOfMergeFieldNames = getFullTemplate[1];
     const getCurrentTemplateString = getFullTemplate[0];
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
     setTemplate(getCurrentTemplateString.toString()); 
@@ -159,6 +160,26 @@ const Editor = () => {
   
   console.log(template);
 
+  const editOrRemoveTemplate = (e, templateStorageKey) => {
+
+    const elementName = e.target.name; 
+
+    switch (elementName) {
+      case 'edit':
+        const elementId = document.getElementById('dropdown_content');
+        elementId.classList.remove('active');
+        window.scrollBy(0,10000);
+        console.log(elementId);
+        break;
+      case 'remove':
+        localStorage.removeItem(templateStorageKey)
+        window.location.reload()
+        break;
+      default:
+        console.log('Menu item not found!');
+    }
+  };
+
   return (
     <PageContainer>
       {!templateList ? <Title>Ainda não há templates salvos.</Title> : <Title>Templates Salvos</Title>}
@@ -172,7 +193,8 @@ const Editor = () => {
               templateList.map((item, index) => (
                 <Col key={index} width="25%">
                   <StatusCard 
-                    onclick={() => handleFormModal(true, item)}
+                    onClick={() => handleFormModal(true, item)}
+                    onClickMenu={(e) => editOrRemoveTemplate(e, item)}
                     title={item}
                     update={`Modificado: ${lastUpdate}`}
                   />
@@ -252,11 +274,12 @@ const Editor = () => {
 
       <ModalForm 
         isOpen={isFormModalOpen}
+        modalTitle={inputMergeFieldValue ? templateName : ""}
+        image={ModalImage}
         fieldsNameList={inputMergeFieldValue}
         onRequestClose={() => handleFormModal(false)} 
         onChange={() => fillPdfMergeFields(templateName)} 
         onClickModalFillFields={replaceMergeFields}
-        modalTitle={`Campos entrada de texto do ${templateName}`}
       />
 
     </PageContainer>

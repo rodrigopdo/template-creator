@@ -15,7 +15,7 @@ export const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: 20px 5px;
+  margin: 0 5px 60px;
   div:first-child {
     margin-right: 30px;
   }

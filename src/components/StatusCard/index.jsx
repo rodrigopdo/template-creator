@@ -10,19 +10,28 @@ import {
   MenuContainer
 } from './styles';
 
-const StatusCard = props => {
+const StatusCard = ({
+  onClick, 
+  onClickMenu, 
+  title, 
+  update
+}) => {
 
   return (
     <Card >
       <MenuContainer>
-        <Dropdown image={Image} />
+        <Dropdown 
+          image={Image} 
+          onClick={onClickMenu}
+
+        />
       </MenuContainer>
-      <MainCardSection onClick={props.onclick}>
+      <MainCardSection onClick={onClick}>
         <div>
-          <h4>{props.title}</h4>
+          <h4>{title}</h4>
         </div>
         <div>
-          <h5>{props.update}</h5>
+          <h5>{update}</h5>
         </div>
       </MainCardSection>
      

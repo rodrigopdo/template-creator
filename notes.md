@@ -30,13 +30,23 @@
 
 [*] Handle Template name requirement when saving with empty field;
 
-[] Handle Modal Form function (onclick on a Card)
+[*] Handle Modal Form function (onclick on a Card)
    
-[] Include menu dropdown in the cards, with the 'edit' and 'remove'.
+[*] Include UI menu dropdown in the cards, with the 'edit', 'remove' and 'close'.
 
 [] Include tooltip on hover the card menu (3 dots).
 
+[] Set feedback in the Modal form when input field is empty, with text and Ilustration, and also change disabled state of "Preencher campos" button.
 
+[] Create 3 function of the dropdown items: 'Editar', 'Remover' and 'Fechar.
+  - EditTemplate function
+    - 
+
+  - RemoveTemplate function
+    - 
+
+  - CloseDropdown function
+    - 
 
 
 

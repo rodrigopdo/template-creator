@@ -1,6 +1,6 @@
- import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from "react-modal";
-
+import { AiOutlineClose } from 'react-icons/ai';
 //COMPONENTS
 import Button from '../Button';
 //STYLES
@@ -10,7 +10,10 @@ import {
   ModalContainer, 
   ModalContent, 
   TextModal,
-  ButtonContainer
+  ButtonContainer,
+  ModalError,
+  TextModalError,
+  ImageModal
 } from './styles';
 // import { ErrorMessage } from '../../pages/Login/styles';
 
@@ -36,7 +39,7 @@ function ModalForm({
   placeholder,
   onClickModalFillFields,
   modalTitle,
-  onClickPdf
+  image,
 }) {
 
   const customStyles = {
@@ -93,7 +96,9 @@ function ModalForm({
             className="react-modal-close"
             text="Fechar"
           >
-           Fechar
+          <span>
+            <AiOutlineClose />
+          </span>
           </button>
 
           <form onSubmit={onClick} action="#">
@@ -116,11 +121,15 @@ function ModalForm({
                     </InputField>
                   ))
                 }
-              </>: 
-              <div>
-                Tá zerado mano!
-              </div>
-
+              </>:
+              <ModalError>
+                <ImageModal>
+                  <img src={image}></img>
+                </ImageModal>
+                <TextModalError>
+                 Ops, não há campos salvos... 
+                </TextModalError>
+              </ModalError> 
             }
             <ButtonContainer>
               <Button
@@ -138,7 +147,6 @@ function ModalForm({
                 disabled={fieldsNameList == null}
                 className="btn-modal"
                 onClick={onClickModalFillFields}
-                
               />
             </ButtonContainer>
           </form>

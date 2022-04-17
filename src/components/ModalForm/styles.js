@@ -31,7 +31,16 @@ export const ModalContent = styled.div`
     border: 0;
     background: transparent;
     transition: filter 0.2s;
-
+    svg {
+      border-radius: 50px;
+      padding: 2px;
+      font-size: 1.3rem;
+      color: ${colors.gray4};
+      &:hover {
+        background-color: ${colors.gray6};
+        font-weight: 600;
+      }
+    }
     &:hover{
     filter: brightness(0.8);
     }
@@ -70,12 +79,6 @@ export const ModalContent = styled.div`
 
 `;
 
-// export const ImageModal = styled.i`
-//   margin: 20px 0;
-//   width: 70%;
-//   color: ${colors.cleanGreen3};
-//   font-size: 72px;
-// `;
 
 export const TextModal = styled.p`
   text-align: center;
@@ -131,4 +134,20 @@ export const ButtonContainer = styled.div`
   button:nth-child(2) {
     margin-left: 10px;
   }
+`;
+
+export const ModalError = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const ImageModal = styled.div`
+  margin: 20px auto;
+`;
+
+export const TextModalError = styled.div`
+  margin: 5px auto 60px;
+  font-size: 1.1rem;
+  font-weight: 600;
 `;

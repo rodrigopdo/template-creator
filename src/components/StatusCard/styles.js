@@ -27,9 +27,9 @@ export const Card = styled.div `
 export const MainCardSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 0 auto;
+  margin: 0 0 0 30px;
   padding: 0 10px;
-  justify-content: flex-end;3
+  justify-content: flex-end;
   max-height: 90%;
 
   h4 {

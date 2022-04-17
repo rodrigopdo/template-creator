@@ -1,11 +1,10 @@
 [
   {
-  "display_name": "Editar"
-  },
-  {
-  "display_name": "Remover"
-  },
-  {
-  "display_name": "Fechar"
-  }
+  "display_name": "Editar",
+  "element_name": "edit"
+},
+{
+  "display_name": "Remover",
+  "element_name": "remove"
+}
 ]

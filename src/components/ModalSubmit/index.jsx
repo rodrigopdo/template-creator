@@ -3,9 +3,16 @@ import Modal from "react-modal";
 
 //COMPONENTS
 import Button from '../Button';
+
 //STYLES
 import colors from '../../styles/colors'
-import { ImageModal, InputSmaller, ModalContainer, ModalContent, TextModal } from './styles';
+import { 
+  ImageModal, 
+  InputSmaller, 
+  ModalContainer, 
+  ModalContent, 
+  TextModal 
+} from './styles';
 
 Modal.setAppElement("#root");
 
