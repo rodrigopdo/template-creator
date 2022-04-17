@@ -124,6 +124,7 @@ const Editor = () => {
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
     setTemplate(getCurrentTemplateString.toString()); 
     setTemplateName(templateStorageKey);
+
     console.log(getArrayOfMergeFieldNames);
     console.log(getCurrentTemplateString);
   }
@@ -137,7 +138,7 @@ const Editor = () => {
       if(document.getElementById(`input${i}`) != null) {
         inputEl = document.getElementById(`input${i}`).value;
         inputValueArray.push(inputEl);
-        // localStorage.setItem('typedInput' ,JSON.stringify(inputValueArray));
+       
         setArrayOfInputValue(inputValueArray)
       }
     }
@@ -153,9 +154,10 @@ const Editor = () => {
       setTemplate(templateReplaced)
     });
       
-    e.preventDefault();
     setIsFormModalOpen(false);
     setIsSaveButtonShow(false);
+    e.preventDefault();
+    window.scrollBy(0, 10000);
   }
   
   console.log(template);

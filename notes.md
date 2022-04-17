@@ -16,7 +16,7 @@
   - create a new template card with name and last update above editor;
   - open modal submit.
 
-[*] In the modal submit feedback, the btn inside modal clean editor and template name input.
+[*] In the modal submit feedback, the btn inside modal clean editor and template name input (reload page).
 
 [*] Replace merge fields function (onclick 'Preencher campos')
   - Replace de fields;
@@ -34,19 +34,18 @@
    
 [*] Include UI menu dropdown in the cards, with the 'edit', 'remove' and 'close'.
 
+
+[*] Set feedback in the Modal form when input field is empty, with text and Ilustration, and also change disabled state of "Preencher campos" button.
+
+
+[*] Create 3 function of the dropdown items: 'Editar', 'Remover' and 'Fechar.
+  - EditTemplate function
+  - RemoveTemplate function
+
 [] Include tooltip on hover the card menu (3 dots).
 
-[] Set feedback in the Modal form when input field is empty, with text and Ilustration, and also change disabled state of "Preencher campos" button.
+[] Save changes function, update localstorage.
 
-[] Create 3 function of the dropdown items: 'Editar', 'Remover' and 'Fechar.
-  - EditTemplate function
-    - 
-
-  - RemoveTemplate function
-    - 
-
-  - CloseDropdown function
-    - 
-
+[] Draw 2 new illustration (changes saved and remove template confirmation)
 
 
