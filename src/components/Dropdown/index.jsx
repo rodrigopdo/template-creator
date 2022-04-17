@@ -22,7 +22,7 @@ const clickOutsideRef = (content_ref, toggle_ref, dropdown, setDropdown) => {
   });
 }
 
-const Dropdown = ({image, onClick}) => {
+const Dropdown = ({image, onClick, id}) => {
 
   const [dropdown, setDropdown] = useState(false)
 
@@ -39,7 +39,7 @@ const Dropdown = ({image, onClick}) => {
         <img src={image} alt="Menu" />
       </DropdownToggle>
       
-      <DropdownContent id='dropdown_content' ref={dropdown_content_el}>
+      <DropdownContent id={id} ref={dropdown_content_el}>
         {menu_list_dropdown ? menu_list_dropdown.map((item, index) => (  
           <div key={index}>
             <button name={item.element_name} type='button' onClick={onClick}>{item.display_name}</button>

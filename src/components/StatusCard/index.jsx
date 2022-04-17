@@ -14,7 +14,8 @@ const StatusCard = ({
   onClick, 
   onClickMenu, 
   title, 
-  update
+  update,
+  id
 }) => {
 
   return (
@@ -23,7 +24,7 @@ const StatusCard = ({
         <Dropdown 
           image={Image} 
           onClick={onClickMenu}
-
+          id={id}
         />
       </MenuContainer>
       <MainCardSection onClick={onClick}>

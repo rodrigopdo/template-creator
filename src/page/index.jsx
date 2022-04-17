@@ -160,16 +160,23 @@ const Editor = () => {
   
   console.log(template);
 
-  const editOrRemoveTemplate = (e, templateStorageKey) => {
+  const editOrRemoveTemplate = (e, templateStorageKey, id) => {
 
     const elementName = e.target.name; 
 
     switch (elementName) {
       case 'edit':
-        const elementId = document.getElementById('dropdown_content');
+        const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
+        const getArrayOfMergeFieldNames = getFullTemplate[1];
+        const getCurrentTemplateString = getFullTemplate[0];
+        setInputMergeFieldValue(getArrayOfMergeFieldNames)
+        setTemplate(getCurrentTemplateString.toString()); 
+        setTemplateName(templateStorageKey);
+
+        const elementId = document.getElementById(id);
         elementId.classList.remove('active');
         window.scrollBy(0,10000);
-        console.log(elementId);
+
         break;
       case 'remove':
         localStorage.removeItem(templateStorageKey)
@@ -182,27 +189,33 @@ const Editor = () => {
 
   return (
     <PageContainer>
-      {!templateList ? <Title>Ainda não há templates salvos.</Title> : <Title>Templates Salvos</Title>}
+      {!templateList ? 
+        <Title>Ainda não há templates salvos.</Title> 
+        : 
+        <Title>Templates Salvos</Title>
+      }
 
       {templateList.length > 0 ?
-          <CardsWrapper
-            alignItems="center"
-            justifyContent="flex-start"
-          >
-            {
-              templateList.map((item, index) => (
-                <Col key={index} width="25%">
-                  <StatusCard 
-                    onClick={() => handleFormModal(true, item)}
-                    onClickMenu={(e) => editOrRemoveTemplate(e, item)}
-                    title={item}
-                    update={`Modificado: ${lastUpdate}`}
-                  />
-                </Col>
-              ))
-            }
-          </CardsWrapper>
-          : <></>
+        <CardsWrapper
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          {
+            templateList.map((item, index) => (
+              <Col key={index} width="25%">
+                <StatusCard 
+                  onClick={() => handleFormModal(true, item)}
+                  onClickMenu={(e) => editOrRemoveTemplate(e, item, index)}
+                  title={item}
+                  update={`Modificado: ${lastUpdate}`}
+                  id={index}
+                />
+              </Col>
+            ))
+          }
+        </CardsWrapper>
+        : 
+        <></>
       }
       <Title>Criar novo Template</Title>
 
@@ -250,7 +263,7 @@ const Editor = () => {
               onClick={saveTemplateLocalStorage}
             />
           </div>
-        :
+          :
           <div>
             <Button
               type="submit"
