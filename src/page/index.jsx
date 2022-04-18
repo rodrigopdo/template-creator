@@ -264,16 +264,15 @@ const Editor = () => {
     const editedDocument = doc(database, `documents/${templateName}`);
     function writeDailySpecial() {
       const docData = {
-        // documentType: templateName,
+        documentType: templateName,
         content: template,
       };
-      // setDoc(editedDocument, docData, {merge: f
-      setDoc(editedDocument, docData);
+      setDoc(editedDocument, docData, { merge: true });
     }
     writeDailySpecial();
-    // setIsSaveEditionModalOpen(true);
-   
-    window.location.reload()
+    // window.location.reload()
+    setTemplate('');
+    setTemplateName('');
   };
 
   return (
@@ -296,7 +295,7 @@ const Editor = () => {
                   onClick={() => handleFormModal(true, item)}
                   onClickMenu={(e) => editOrRemoveTemplate(e, item, index)}
                   title={item}
-                  update={`Modificado: ${'12/11/2021'}`} //SET CURRENT DATE
+                  update={`Modificado: ${'18/04/2022'}`} //SET CURRENT DATE
                   id={index}
                 />
               </Col>
