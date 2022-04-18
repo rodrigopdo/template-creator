@@ -144,7 +144,7 @@ function ModalForm({
                 type="button"
                 hoverColor={colors.pureGreen}
                   text="Preencher Campos"
-                disabled={fieldsNameList == null}
+                // disabled={fieldsNameList}
                 className="btn-modal"
                 onClick={onClickModalFillFields}
               />

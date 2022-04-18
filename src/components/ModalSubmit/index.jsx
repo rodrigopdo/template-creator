@@ -40,7 +40,7 @@ function ModalSubmit({
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       width: `${width ? width : '25%'}`,
-      minWidth: '250px',
+      minWidth: '290px',
       height: '296px',
       borderRadius: '10px',
       display: 'flex',

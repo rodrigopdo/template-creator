@@ -19,7 +19,6 @@ import Button from '../components/Button';
 import ModalSubmit from '../components/ModalSubmit';
 import ModalForm from '../components/ModalForm';
 import StatusCard from '../components/StatusCard';
-import ModalSaveDocument from '../components/ModalSaveDocument';
 
 //STYLES
 import colors from '../styles/colors';
@@ -93,7 +92,7 @@ const Editor = () => {
     // console.log(arrayTemplateNameList);
 
     if(templateName != '') {
-      setIsSaveButtonDisabled(false);
+    setIsSaveButtonDisabled(false);
     }else {
       setIsSaveButtonDisabled(true);
     }
@@ -157,7 +156,7 @@ const Editor = () => {
   };
 
   const handleCloseSaveEditionModal = () => {
-    setIsSaveEditionModalOpen(false);
+  setIsSaveEditionModalOpen(false);
     window.location.reload()
   };
 
@@ -187,7 +186,6 @@ const Editor = () => {
     setInputMergeFieldValue(getArrayOfMergeFieldNames)
     setTemplate(getCurrentTemplateString); 
     setTemplateName(templateStorageKey);
-    
     setIsFormModalOpen(status);
   };
   
@@ -249,9 +247,8 @@ const Editor = () => {
         elementId.classList.remove('active');
         window.scrollBy(0,10000);
         break;
+
       case 'remove':
-
-
         await deleteDoc(doc(database, "templates", templateStorageKey));
         window.location.reload()
 
@@ -264,17 +261,18 @@ const Editor = () => {
   };
 
   const saveDocumentEdition = () => {
-    const editedDocument = doc(database, `editedDocuments/${documentName}`);
+    const editedDocument = doc(database, `documents/${templateName}`);
     function writeDailySpecial() {
       const docData = {
-        documentName: templateName,
+        // documentType: templateName,
         content: template,
       };
-      // setDoc(editedDocument, docData, {merge: false});
+      // setDoc(editedDocument, docData, {merge: f
       setDoc(editedDocument, docData);
     }
     writeDailySpecial();
-    setIsSaveEditionModalOpen(true);
+    // setIsSaveEditionModalOpen(true);
+   
     window.location.reload()
   };
 
@@ -315,15 +313,27 @@ const Editor = () => {
       }
       <HeaderEditor>
         <div>
-          <input 
-            autoFocus
-            required
-            maxLength={40} 
-            minLength={5}
-            placeholder='Nome do template..'
-            value={templateName}
-            onChange={(e) => setTemplateName(e.target.value)}
-          />
+          {/* {isDocumentEdition ? */}
+            <input 
+              autoFocus
+              required
+              maxLength={40} 
+              minLength={5}
+              placeholder='Insira o nome...'
+              value={templateName}
+              onChange={(e) => setTemplateName(e.target.value)}
+            />
+            {/* : */}
+            {/* <input 
+              autoFocus
+              required
+              maxLength={40} 
+              minLength={5}
+              placeholder='Nome do documento..'
+              value={templateName}
+              onChange={(e) => setTemplateName(e.target.value)}
+          /> */}
+          {/* } */}
         </div>
       </HeaderEditor> 
 
@@ -343,7 +353,7 @@ const Editor = () => {
             bgColor="transparent"
             text="Cancelar"
             color={colors.pureGreen}
-            disabled={isCancelButtonDisabled}
+            // disabled={isCancelButtonDisabled}
             onClick={() => window.location.reload()}
             />
         </div>
@@ -363,7 +373,7 @@ const Editor = () => {
               type="submit"
               hoverColor={colors.darkGreen}
               text="Salvar Documento"
-              onClick={() => handleSaveDocumentModal(true)}
+              onClick={saveDocumentEdition}
             />
           </div>
         }
@@ -380,7 +390,7 @@ const Editor = () => {
       />
       <ModalSubmit 
         isOpen={isSaveEditionModalOpen}
-        onRequestClose={handleCloseSaveEditionModal} 
+        onRequestClose={() => setIsSaveEditionModalOpen(false)} 
         status={errorModal ? "Ops, erro ao tentar salvar o documento! Por gentileza, tente novamente!" : `Documento ${templateName} salvo com sucesso!`} 
         statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
       />
@@ -393,13 +403,6 @@ const Editor = () => {
         onChange={fillMergeFields} 
         onClickModalFillFields={replaceMergeFields}
       />
-      <ModalSaveDocument 
-        isOpen={isSaveDocumentModalOpen}
-        onRequestClose={saveDocumentEdition} 
-        status={errorModal ? "Ops, erro ao tentar salvar o documento! Por gentileza, tente novamente!" : `Documento ${templateName} salvo com sucesso!`} 
-        statusImg={errorModal ? "fas fa-exclamation-triangle" : "far fa-check-circle"} 
-      />
-
     </PageContainer>
   ); 
 }

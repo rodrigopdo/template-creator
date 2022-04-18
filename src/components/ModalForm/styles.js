@@ -11,17 +11,17 @@ export const ModalContainer = styled.div`
   z-index: 9999;
   position: relative;
 
-  ${'' /* @media(max-width: 900px) {
+  @media(max-width: 900px) {
     width: 50% !important;
   }
 
   @media(max-width: 1200px) {
     width: 50% !important;
-  } */}
+  }
 `;
 
 export const ModalContent = styled.div`
-  overflow: hidden;
+  ${'' /* overflow: hidden; */}
   width: 100%;
   
   .react-modal-close{
@@ -103,8 +103,8 @@ export const InputField = styled.div`
   max-width: 650px;
   width: 100%;
   background-color: ${colors.gray6};
-  margin: 20px 20px;
-  height: 55px;
+  margin: 10px 20px;
+  height: 50px;
   border-radius: 50px;
   display: grid;
   padding: 0 1.5rem;
