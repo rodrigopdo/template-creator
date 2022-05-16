@@ -6,12 +6,10 @@ import {
   collection, 
   query, 
   getDoc, 
-  addDoc, 
   getDocs, 
   doc, 
   setDoc, 
   deleteDoc,
-  updateDoc 
 } from 'firebase/firestore';
 
 //COMPONENTS
@@ -35,7 +33,6 @@ import {
 //ASSETS
 import ModalImage from '../assets/no_template.svg';
 
-
 const firebaseApp = initializeApp( {
   apiKey: "AIzaSyBtdRCyl5-8apWsegyT73P1lXaN5Bzb4GA",
   authDomain: "template-poc-36ee9.firebaseapp.com",
@@ -50,7 +47,6 @@ const database = getFirestore()
 const Editor = () => {
   
   const [template, setTemplate] = useState('');
-  const [isCancelButtonDisabled, setIsCancelButtonDisabled] = useState(true);
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
@@ -61,8 +57,6 @@ const Editor = () => {
   const [arrayOfInputValue, setArrayOfInputValue] = useState([]);
   const [isSaveButtonShow, setIsSaveButtonShow] = useState(true);
   const [isSaveEditionModalOpen, setIsSaveEditionModalOpen] = useState(false);
-  const [isSaveDocumentModalOpen, setIsSaveDocumentModalOpen] = useState(false);
-  const [documentName, setDocumentName] = useState('Documento sem nome');
   
   async function getMergefieldNames() {
     const newArrayNameList = [];
@@ -147,7 +141,6 @@ const Editor = () => {
     setIsSubmitModalOpen(true);
 
     // localStorage.setItem(templateName, JSON.stringify([template, mergeFieldsListName]));
-   
   };
   
   const handleCloseSubmitModal = () => {
@@ -164,7 +157,6 @@ const Editor = () => {
     setIsSaveDocumentModalOpen(status);
   };
 
-  //FIREBASE
   const handleFormModal = async (status, templateStorageKey) => {
     
     // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
@@ -229,24 +221,24 @@ const Editor = () => {
     switch (elementName) {
       case 'edit':
 
-        const docRef = doc(database, "templates", templateStorageKey);
-        const docSnap = await getDoc(docRef);
-        const getFullTemplate = docSnap.data();
-        const getArrayOfMergeFieldNames = getFullTemplate.mergeFieldList;
-        const getCurrentTemplateString = getFullTemplate.content;
+      const docRef = doc(database, "templates", templateStorageKey);
+      const docSnap = await getDoc(docRef);
+      const getFullTemplate = docSnap.data();
+      const getArrayOfMergeFieldNames = getFullTemplate.mergeFieldList;
+      const getCurrentTemplateString = getFullTemplate.content;
 
-        // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
-        // const getArrayOfMergeFieldNames = getFullTemplate[1];
-        // const getCurrentTemplateString = getFullTemplate[0];
+      // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
+      // const getArrayOfMergeFieldNames = getFullTemplate[1];
+      // const getCurrentTemplateString = getFullTemplate[0];
 
-        setInputMergeFieldValue(getArrayOfMergeFieldNames)
-        setTemplate(getCurrentTemplateString.toString()); 
-        setTemplateName(templateStorageKey);
+      setInputMergeFieldValue(getArrayOfMergeFieldNames)
+      setTemplate(getCurrentTemplateString.toString()); 
+      setTemplateName(templateStorageKey);
 
-        const elementId = document.getElementById(id);
-        elementId.classList.remove('active');
-        window.scrollBy(0,10000);
-        break;
+      const elementId = document.getElementById(id);
+      elementId.classList.remove('active');
+      window.scrollBy(0,10000);
+      break;
 
       case 'remove':
         await deleteDoc(doc(database, "templates", templateStorageKey));
@@ -270,7 +262,6 @@ const Editor = () => {
       setDoc(editedDocument, docData, { merge: true });
     }
     writeDailySpecial();
-    // window.location.reload()
     setTemplate('');
     setTemplateName('');
   };
@@ -352,7 +343,6 @@ const Editor = () => {
             bgColor="transparent"
             text="Cancelar"
             color={colors.pureGreen}
-            // disabled={isCancelButtonDisabled}
             onClick={() => window.location.reload()}
             />
         </div>
@@ -377,7 +367,6 @@ const Editor = () => {
           </div>
         }
       </BtnContainer>
-      
 
       <ModalSubmit 
         isOpen={isSubmitModalOpen}
