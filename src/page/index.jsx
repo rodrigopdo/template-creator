@@ -45,7 +45,7 @@ const firebaseApp = initializeApp( {
   appId: "1:200222506514:web:4f162934018bed4503e2cb"
 });
 
-const database = getFirestore()
+const database = getFirestore(firebaseApp);
 
 const Editor = () => {
   
@@ -81,28 +81,23 @@ const Editor = () => {
 
   useEffect(() => {
     getMergefieldNames();
-
   }, [])
   
   useEffect(() => {
-    
     // let arrayTemplateNameList = Object.keys(localStorage);
     // setTemplateList(arrayTemplateNameList);
     // console.log(localStorage);
     // console.log(arrayTemplateNameList);
-
-    if(templateName != '') {
-    setIsSaveButtonDisabled(false);
+    if(templateName !== '') {
+      setIsSaveButtonDisabled(false);
     }else {
       setIsSaveButtonDisabled(true);
     }
-    
-    if(templateName != '') {
+    if(templateName !== '') {
       setIsCancelButtonDisabled(false);
     }else {
       setIsCancelButtonDisabled(true);
     }
-    
   }, [templateName]);
   
   const joditEditor = useRef(null)
@@ -132,9 +127,7 @@ const Editor = () => {
     console.log(mergeFieldsListName);
     
   const saveTemplate = () => {
-
     const editedDocument = doc(database, `templates/${templateName}`);
-    
     function writeDocument() {
       const docData = {
         documentName: templateName,
@@ -145,9 +138,7 @@ const Editor = () => {
     }
     writeDocument();
     setIsSubmitModalOpen(true);
-
     // localStorage.setItem(templateName, JSON.stringify([template, mergeFieldsListName]));
-   
   };
   
   const handleCloseSubmitModal = () => {
@@ -164,14 +155,10 @@ const Editor = () => {
     setIsSaveDocumentModalOpen(status);
   };
 
-  //FIREBASE
   const handleFormModal = async (status, templateStorageKey) => {
-    
     // const getFullTemplate = (JSON.parse(localStorage.getItem(templateStorageKey)))
     // const getArrayOfMergeFieldNames = getFullTemplate[1];
     // const getCurrentTemplateString = getFullTemplate[0];
-
-    //FIREBASE GET DATA
     const docRef = doc(database, "templates", templateStorageKey);
     const docSnap = await getDoc(docRef);
     const getFullTemplate = docSnap.data();
@@ -262,14 +249,14 @@ const Editor = () => {
 
   const saveDocumentEdition = () => {
     const editedDocument = doc(database, `documents/${templateName}`);
-    function writeDailySpecial() {
+    function writeDoc() {
       const docData = {
         documentType: templateName,
         content: template,
       };
       setDoc(editedDocument, docData, { merge: true });
     }
-    writeDailySpecial();
+    writeDoc();
     // window.location.reload()
     setTemplate('');
     setTemplateName('');
@@ -282,7 +269,6 @@ const Editor = () => {
         : 
         <Title>Templates Salvos</Title>
       }
-
       {templateList.length > 0 ?
         <CardsWrapper
           alignItems="center"
